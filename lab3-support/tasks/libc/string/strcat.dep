@@ -1,0 +1,11 @@
+/home/ramsey/Documents/lab3/lab3-support/tasks/libc/string/strcat.o:  \
+ /home/ramsey/Documents/lab3/lab3-support/tasks/libc/string/strcat.c \
+  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/string.h \
+  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/sys/types.h \
+  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/bits/types.h
+
+/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/string.h:
+
+/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/sys/types.h:
+
+/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/bits/types.h:
