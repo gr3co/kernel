@@ -62,3 +62,5 @@ Temporary Items
 *.x86_64
 *.hex
 
+*.bin
+*.conf

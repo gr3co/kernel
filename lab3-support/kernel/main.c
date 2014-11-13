@@ -24,6 +24,8 @@ int irq_instr_2;
 
 int *irqTop;
 
+volatile int sleep_done;
+
 typedef enum {FALSE, TRUE} bool;
 
 #define NULL 0
@@ -112,6 +114,9 @@ int kmain(int argc, char** argv, uint32_t table)
 
     //get the start time of the kernel
     base_time = get_timer(0);
+
+    //set the sleep variable
+    sleep_done = 0;
 
 	global_data = table;
 
@@ -255,13 +260,13 @@ ssize_t read_handler(int fd, void *buf, size_t count) {
 //handler for time_swi, trigger interrupt
 unsigned long timer_handler() {
     
-
     return get_timer(base_time);
 }
 
 //handler for sleep_swi, triggers interrupt
 void sleep_handler(unsigned long millis) {
 
+    /*
     //pointers to IC registers we need
     volatile int* ICMR = (volatile int *) ICMR_ADDR;
     volatile int* ICLR = (volatile int *) ICLR_ADDR;
@@ -276,6 +281,17 @@ void sleep_handler(unsigned long millis) {
     *OIER = (*OIER & 0xFFFFFFF1); //allow matches to trigger interrupts
     *OSSR = (*OSSR & 0xFFFFFFF1); //hopefully this triggers an interrupt
     //*OSMR0 = *((volatile int *) (millis * CLOCK_TO_MILLI)
+    */
+
+
+    sleep_done = 0;
+
+    // set the OSMR0 to time + n * millies
+
+    while (sleep_done == 0) {
+
+    }
+
 }
 
 /* C_SWI_Handler uses SWI number to call the appropriate function. */
