@@ -118,16 +118,16 @@ int kmain(int argc, char** argv, uint32_t table)
     sleep_done = 0;
 
     // unmask the sleep irq thingie
-    *(unsigned *)ICMR_ADDR |= ASSERT_26;
+    *(unsigned volatile*)ICMR_ADDR |= ASSERT_26;
 
     // only irq's
-    *(unsigned *)ICLR_ADDR = 0;
+    *(unsigned volatile*)ICLR_ADDR = 0;
 
     // only allow match register 0
-    *(unsigned *)OIER_ADDR |= 1;
+    *(unsigned volatile*)OIER_ADDR |= 1;
 
     // get the base time
-    base_time = *(unsigned *)OSCR0_ADDR;
+    base_time = *(unsigned volatile*)OSCR0_ADDR;
 
     //check irq and swi vector instructions
 	if (check_vector((int *)SWI_VECT_ADDR) == FALSE) {
@@ -265,7 +265,7 @@ ssize_t read_handler(int fd, void *buf, size_t count) {
 unsigned timer_handler() {
     
     // get the current time from the OSCR
-    unsigned current_time = *(unsigned *)OSCR0_ADDR;
+    unsigned volatile current_time = *(unsigned volatile*)OSCR0_ADDR;
 
     // get the time since base time
     unsigned time_elapsed = current_time - base_time;
@@ -283,14 +283,15 @@ void sleep_handler(unsigned millis) {
     unsigned delta_time = CLOCK_TO_MILLI * millis;
 
     // get the current time from oscr
-    unsigned current_time = *(unsigned *)OSCR0_ADDR;
+    unsigned volatile current_time = *(unsigned *)OSCR0_ADDR;
 
     // set the time we want the irq to go off
-    *(unsigned *)OSMR0_ADDR = current_time + delta_time;
+    *(unsigned volatile*)OSMR0_ADDR = current_time + delta_time;
+    printf("%#x\n", current_time + delta_time);
 
     // wait for the irq, then return
     while (sleep_done == 0) {
-        // do nothing, just wait
+        printf("\r%#x", *(unsigned volatile*)OSCR0_ADDR);
     }
 
 }
@@ -331,7 +332,7 @@ void C_IRQ_Handler() {
     
     printf("Got an IRQ!\n");
 
-    volatile unsigned current_interrupts = *(unsigned *)ICPR_ADDR;
+    unsigned volatile current_interrupts = *(unsigned volatile*)ICPR_ADDR;
 
     if (current_interrupts & ASSERT_26) {
         sleep_done = 1;
