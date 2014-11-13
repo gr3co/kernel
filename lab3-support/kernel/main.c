@@ -287,11 +287,11 @@ void sleep_handler(unsigned millis) {
 
     // set the time we want the irq to go off
     *(unsigned volatile*)OSMR0_ADDR = current_time + delta_time;
-    printf("%#x\n", current_time + delta_time);
+    printf("OSMR: %#x\n", *(unsigned volatile*)OSMR0_ADDR);
 
     // wait for the irq, then return
     while (sleep_done == 0) {
-        printf("\r%#x", *(unsigned volatile*)OSCR0_ADDR);
+        printf("\rCurrent time: %#x", *(unsigned volatile*)OSCR0_ADDR);
     }
 
 }
@@ -316,7 +316,6 @@ int C_SWI_Handler(int swiNum, int *regs) {
             count = timer_handler();
             break;
         case SLEEP_SWI:
-            printf("got sleep swi\n");
             sleep_handler((unsigned) regs[0]);
             break;
         default:

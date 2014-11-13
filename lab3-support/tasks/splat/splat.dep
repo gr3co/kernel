@@ -4,7 +4,9 @@
   /root/kernel/lab3-support/tasks/libc/include/unistd.h \
   /root/kernel/lab3-support/tasks/libc/include/bits/fileno.h \
   /root/kernel/lab3-support/tasks/libc/include/sys/types.h \
-  /root/kernel/lab3-support/tasks/libc/include/bits/types.h
+  /root/kernel/lab3-support/tasks/libc/include/bits/types.h \
+  /root/kernel/lab3-support/tasks/libc/include/stdio.h \
+  /root/kernel/lab3-support/tasks/libc/include/stdarg.h
 
 /root/kernel/lab3-support/tasks/libc/include/stdlib.h:
 
@@ -15,3 +17,7 @@
 /root/kernel/lab3-support/tasks/libc/include/sys/types.h:
 
 /root/kernel/lab3-support/tasks/libc/include/bits/types.h:
+
+/root/kernel/lab3-support/tasks/libc/include/stdio.h:
+
+/root/kernel/lab3-support/tasks/libc/include/stdarg.h:

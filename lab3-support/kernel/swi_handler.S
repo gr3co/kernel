@@ -14,8 +14,13 @@
     .global swi_handler
     
 swi_handler:
+
     sub     sp, sp, #4
     stmfd   sp!, {r0-r12, lr}
+
+    mrs     r2, cpsr
+    bic     r2, r2, #0x080  @ Unmask the IRQ bit.
+    msr     cpsr, r2
 
     @ get spsr into general purpose (gp) registers
     mrs     r2, spsr
