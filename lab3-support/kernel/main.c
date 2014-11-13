@@ -284,7 +284,6 @@ void sleep_handler(unsigned millis) {
 
     // get the current time from oscr
     unsigned current_time = *(unsigned *)OSCR0_ADDR;
-    printf("current time: %u\n", current_time);
 
     // set the time we want the irq to go off
     *(unsigned *)OSMR0_ADDR = current_time + delta_time;
