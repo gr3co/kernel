@@ -2,6 +2,7 @@
 
 	.extern C_IRQ_Handler
 	.extern irqTop
+    .extern stackPtr
 
     .file   "irq_handler.S"
     .text
@@ -20,11 +21,15 @@ irq_handler:
     str     r2, [sp, #14*4]
 
     @set stack pointer to heap allocated irq stack
-	ldr 	r2, =irqTop
-	ldr 	r2, [r2] 	@r2 -> irqTop
+	ldr 	r2, =stackPtr
+    str     sp, [r2]
+    ldr     r2, =irqTop
+    ldr     sp, [r2]
 
-	str 	sp, [r2]	@irqTop = oldSp
-	mov		sp, r2 		@sp -> irqTop
+    @ldr 	r2, [r2] 	@r2 -> irqTop
+
+	@str 	sp, [r2]	@irqTop = oldSp
+	@mov		sp, r2 		@sp -> irqTop
 	
 
     @for now, pass in arbitary constant to be printed in C_IRQ_Handler
@@ -33,8 +38,10 @@ irq_handler:
     bl      C_IRQ_Handler
 
     @restore old stack
-    ldr r2, [sp]		@r2 = oldSP
-    mov sp, r2 			@sp = oldSp
+    @ldr r2, [sp]		@r2 = oldSP
+    @mov sp, r2 			@sp = oldSp
+    ldr     r2, =stackPtr
+    ldr     sp, [r2]
 
     @ restore spsr
     ldr     r2, [sp, #14*4]

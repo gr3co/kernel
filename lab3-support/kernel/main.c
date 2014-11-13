@@ -23,6 +23,7 @@ int irq_instr_1;
 int irq_instr_2;
 
 unsigned *irqTop;
+unsigned *stackPtr;
 
 volatile unsigned current_time; //keeps track of system time in milliseconds
 
@@ -48,6 +49,8 @@ typedef enum {FALSE, TRUE} bool;
 #define SFROM_END 0x00ffffff
 #define SDRAM_START 0xa0000000
 #define SDRAM_END 0xa3ffffff
+
+#define CLOCK_TO_MILLI 30800
 
 /* Checks the Vector Table at vector for an appropriate address. */
 bool check_vector(int* vector) {
@@ -111,14 +114,13 @@ int kmain(int argc, char** argv, uint32_t table)
     irq_handler_addr = wire_in(IRQ_VECT_ADDR,0);
     printf("IRQ handler wired in\n");
 
+    current_time = 0;       //initialize global time variable
     reg_set(INT_ICMR_ADDR, (1<<26));    //enable OSTIMER 0 match interrupts
     reg_write(INT_ICLR_ADDR,0);         //set all interrupts to IRQ
     reg_write(OSTMR_OIER_ADDR,OSTMR_OIER_E0);   //enable channel 0 on the OS Timer
-    reg_write(OSTMR_OSMR_ADDR(0),OSTMR_FREQ/100); //put 10 milliseconds in OSMR0
-
-    current_time = reg_read(OSTMR_OSCR_ADDR);   //initialize global time variable
     //unmask_irq();                               //enable IRQ's
-    reg_write(OSTMR_OSCR_ADDR,0);               //reset the clock
+    reg_write(OSTMR_OSCR_ADDR, 0);               //reset the clock
+    reg_write(OSTMR_OSMR_ADDR(0), CLOCK_TO_MILLI * 10); // put 10 millis in thingie
 
     //check irq and swi vector instructions
 	if (check_vector((int *)SWI_VECT_ADDR) == FALSE) {
@@ -293,9 +295,10 @@ int C_SWI_Handler(int swiNum, int *regs) {
 void C_IRQ_Handler() {
     //printf("%d",reg_read(OSTMR_OSCR_ADDR));
     if (reg_read(INT_ICPR_ADDR) & (1 << 26)) {
+        current_time += 10;
         reg_set(OSTMR_OSSR_ADDR,OSTMR_OSSR_M0); //handshake
         reg_write(OSTMR_OSCR_ADDR,0); //reset timer
-        current_time += 10;
+        reg_write(OSTMR_OSMR_ADDR(0), CLOCK_TO_MILLI * 10); // call again in 10 millis
     }
 
 }
