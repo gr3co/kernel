@@ -1,53 +1,53 @@
-/home/ramsey/Documents/lab3/lab3-support/kernel/main.o:  \
- /home/ramsey/Documents/lab3/lab3-support/kernel/main.c \
-  /home/ramsey/Documents/lab3/lab3-support/uboot/include/exports.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/include/types.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/include/stdarg.h \
-  /home/ramsey/Documents/lab3/lab3-support/uboot/include/_exports.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/include/bits/errno.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/include/bits/fileno.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/include/bits/swi.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/include/arm/psr.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/include/inline.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/include/arm/exception.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/include/arm/interrupt.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/include/arm/timer.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/globals.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/swi_handler.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/irq_handler.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/user_setup.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/exit_handler.h
+/root/kernel/lab3-support/kernel/main.o:  \
+ /root/kernel/lab3-support/kernel/main.c \
+  /root/kernel/lab3-support/uboot/include/exports.h \
+  /root/kernel/lab3-support/kernel/include/types.h \
+  /root/kernel/lab3-support/kernel/include/stdarg.h \
+  /root/kernel/lab3-support/uboot/include/_exports.h \
+  /root/kernel/lab3-support/kernel/include/bits/errno.h \
+  /root/kernel/lab3-support/kernel/include/bits/fileno.h \
+  /root/kernel/lab3-support/kernel/include/bits/swi.h \
+  /root/kernel/lab3-support/kernel/include/arm/psr.h \
+  /root/kernel/lab3-support/kernel/include/inline.h \
+  /root/kernel/lab3-support/kernel/include/arm/exception.h \
+  /root/kernel/lab3-support/kernel/include/arm/interrupt.h \
+  /root/kernel/lab3-support/kernel/include/arm/timer.h \
+  /root/kernel/lab3-support/kernel/globals.h \
+  /root/kernel/lab3-support/kernel/swi_handler.h \
+  /root/kernel/lab3-support/kernel/irq_handler.h \
+  /root/kernel/lab3-support/kernel/user_setup.h \
+  /root/kernel/lab3-support/kernel/exit_handler.h
 
-/home/ramsey/Documents/lab3/lab3-support/uboot/include/exports.h:
+/root/kernel/lab3-support/uboot/include/exports.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/include/types.h:
+/root/kernel/lab3-support/kernel/include/types.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/include/stdarg.h:
+/root/kernel/lab3-support/kernel/include/stdarg.h:
 
-/home/ramsey/Documents/lab3/lab3-support/uboot/include/_exports.h:
+/root/kernel/lab3-support/uboot/include/_exports.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/include/bits/errno.h:
+/root/kernel/lab3-support/kernel/include/bits/errno.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/include/bits/fileno.h:
+/root/kernel/lab3-support/kernel/include/bits/fileno.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/include/bits/swi.h:
+/root/kernel/lab3-support/kernel/include/bits/swi.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/include/arm/psr.h:
+/root/kernel/lab3-support/kernel/include/arm/psr.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/include/inline.h:
+/root/kernel/lab3-support/kernel/include/inline.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/include/arm/exception.h:
+/root/kernel/lab3-support/kernel/include/arm/exception.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/include/arm/interrupt.h:
+/root/kernel/lab3-support/kernel/include/arm/interrupt.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/include/arm/timer.h:
+/root/kernel/lab3-support/kernel/include/arm/timer.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/globals.h:
+/root/kernel/lab3-support/kernel/globals.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/swi_handler.h:
+/root/kernel/lab3-support/kernel/swi_handler.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/irq_handler.h:
+/root/kernel/lab3-support/kernel/irq_handler.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/user_setup.h:
+/root/kernel/lab3-support/kernel/user_setup.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/exit_handler.h:
+/root/kernel/lab3-support/kernel/exit_handler.h:

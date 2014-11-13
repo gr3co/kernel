@@ -1,11 +1,11 @@
-/home/ramsey/Documents/lab3/lab3-support/kernel/arm/psr.o:  \
- /home/ramsey/Documents/lab3/lab3-support/kernel/arm/psr.c \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/include/types.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/include/arm/psr.h \
-  /home/ramsey/Documents/lab3/lab3-support/kernel/include/inline.h
+/root/kernel/lab3-support/kernel/arm/psr.o:  \
+ /root/kernel/lab3-support/kernel/arm/psr.c \
+  /root/kernel/lab3-support/kernel/include/types.h \
+  /root/kernel/lab3-support/kernel/include/arm/psr.h \
+  /root/kernel/lab3-support/kernel/include/inline.h
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/include/types.h:
+/root/kernel/lab3-support/kernel/include/types.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/include/arm/psr.h:
+/root/kernel/lab3-support/kernel/include/arm/psr.h:
 
-/home/ramsey/Documents/lab3/lab3-support/kernel/include/inline.h:
+/root/kernel/lab3-support/kernel/include/inline.h:

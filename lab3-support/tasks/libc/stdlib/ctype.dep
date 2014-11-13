@@ -1,8 +1,8 @@
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/stdlib/ctype.o:  \
- /home/ramsey/Documents/lab3/lab3-support/tasks/libc/stdlib/ctype.c \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/ctype.h \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/inline.h
+/root/kernel/lab3-support/tasks/libc/stdlib/ctype.o:  \
+ /root/kernel/lab3-support/tasks/libc/stdlib/ctype.c \
+  /root/kernel/lab3-support/tasks/libc/include/ctype.h \
+  /root/kernel/lab3-support/tasks/libc/include/inline.h
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/ctype.h:
+/root/kernel/lab3-support/tasks/libc/include/ctype.h:
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/inline.h:
+/root/kernel/lab3-support/tasks/libc/include/inline.h:

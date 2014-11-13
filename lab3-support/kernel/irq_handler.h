@@ -3,7 +3,7 @@
 #ifndef IRQ_HANDLER_H
 #define IRQ_HANDLER_H
 
-int irq_handler(int irq_instruction);
+void irq_handler();
 
 #endif /* SWI_HANDLER_H */
 

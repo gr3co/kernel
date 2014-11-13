@@ -1,20 +1,20 @@
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/stdlib/strtol.o:  \
- /home/ramsey/Documents/lab3/lab3-support/tasks/libc/stdlib/strtol.c \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/stdlib.h \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/ctype.h \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/inline.h \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/string.h \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/sys/types.h \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/bits/types.h
+/root/kernel/lab3-support/tasks/libc/stdlib/strtol.o:  \
+ /root/kernel/lab3-support/tasks/libc/stdlib/strtol.c \
+  /root/kernel/lab3-support/tasks/libc/include/stdlib.h \
+  /root/kernel/lab3-support/tasks/libc/include/ctype.h \
+  /root/kernel/lab3-support/tasks/libc/include/inline.h \
+  /root/kernel/lab3-support/tasks/libc/include/string.h \
+  /root/kernel/lab3-support/tasks/libc/include/sys/types.h \
+  /root/kernel/lab3-support/tasks/libc/include/bits/types.h
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/stdlib.h:
+/root/kernel/lab3-support/tasks/libc/include/stdlib.h:
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/ctype.h:
+/root/kernel/lab3-support/tasks/libc/include/ctype.h:
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/inline.h:
+/root/kernel/lab3-support/tasks/libc/include/inline.h:
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/string.h:
+/root/kernel/lab3-support/tasks/libc/include/string.h:
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/sys/types.h:
+/root/kernel/lab3-support/tasks/libc/include/sys/types.h:
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/bits/types.h:
+/root/kernel/lab3-support/tasks/libc/include/bits/types.h:

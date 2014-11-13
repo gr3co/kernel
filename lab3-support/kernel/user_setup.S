@@ -31,6 +31,7 @@ user_setup:
     @ change mode to USER
     mrs     r2, cpsr
     orr     r2, r2, #0x040  @ Mask the FIQ bit.
+    bic     r2, r2, #0x080  @ Unmask the IRQ bit.
     bic     r2, r2, #0x003  @ Change mode bits to user.
     msr     cpsr, r2
 

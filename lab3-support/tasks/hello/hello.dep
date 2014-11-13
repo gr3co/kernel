@@ -1,14 +1,14 @@
-/home/ramsey/Documents/lab3/lab3-support/tasks/hello/hello.o:  \
- /home/ramsey/Documents/lab3/lab3-support/tasks/hello/hello.c \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/unistd.h \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/bits/fileno.h \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/sys/types.h \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/bits/types.h
+/root/kernel/lab3-support/tasks/hello/hello.o:  \
+ /root/kernel/lab3-support/tasks/hello/hello.c \
+  /root/kernel/lab3-support/tasks/libc/include/unistd.h \
+  /root/kernel/lab3-support/tasks/libc/include/bits/fileno.h \
+  /root/kernel/lab3-support/tasks/libc/include/sys/types.h \
+  /root/kernel/lab3-support/tasks/libc/include/bits/types.h
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/unistd.h:
+/root/kernel/lab3-support/tasks/libc/include/unistd.h:
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/bits/fileno.h:
+/root/kernel/lab3-support/tasks/libc/include/bits/fileno.h:
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/sys/types.h:
+/root/kernel/lab3-support/tasks/libc/include/sys/types.h:
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/bits/types.h:
+/root/kernel/lab3-support/tasks/libc/include/bits/types.h:

@@ -1,8 +1,8 @@
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/swi/time.o:  \
- /home/ramsey/Documents/lab3/lab3-support/tasks/libc/swi/time.S \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/asm.h \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/bits/swi.h
+/root/kernel/lab3-support/tasks/libc/swi/time.o:  \
+ /root/kernel/lab3-support/tasks/libc/swi/time.S \
+  /root/kernel/lab3-support/tasks/libc/include/asm.h \
+  /root/kernel/lab3-support/tasks/libc/include/bits/swi.h
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/asm.h:
+/root/kernel/lab3-support/tasks/libc/include/asm.h:
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/bits/swi.h:
+/root/kernel/lab3-support/tasks/libc/include/bits/swi.h:

@@ -15,15 +15,15 @@
 #include "exit_handler.h"
 
 uint32_t global_data;
-unsigned long base_time;
 
 int swi_instr_1;
 int swi_instr_2;
 int irq_instr_1;
 int irq_instr_2;
 
-int *irqTop;
+unsigned *irqTop;
 
+unsigned base_time;
 volatile int sleep_done;
 
 typedef enum {FALSE, TRUE} bool;
@@ -58,7 +58,7 @@ typedef enum {FALSE, TRUE} bool;
 #define OIER_ADDR 0x40a0001c
 #define OSCR0_ADDR 0x40a00010
 #define OSSR_ADDR 0x40a00014
-#define CLOCK_TO_MILLI 3250000000
+#define CLOCK_TO_MILLI 30800
 
 /* Checks the Vector Table at vector for an appropriate address. */
 bool check_vector(int* vector) {
@@ -108,17 +108,26 @@ int kmain(int argc, char** argv, uint32_t table)
 			/* zero global variables to zero. Make sure to consider */
 			/* any implications on code executed before this. */
 
+    global_data = table;
+
     //variable declarations
     int *swi_handler_addr;
     int *irq_handler_addr;
 
-    //get the start time of the kernel
-    base_time = get_timer(0);
-
     //set the sleep variable
     sleep_done = 0;
 
-	global_data = table;
+    // unmask the sleep irq thingie
+    *(unsigned *)ICMR_ADDR |= ASSERT_26;
+
+    // only irq's
+    *(unsigned *)ICLR_ADDR = 0;
+
+    // only allow match register 0
+    *(unsigned *)OIER_ADDR |= 1;
+
+    // get the base time
+    base_time = *(unsigned *)OSCR0_ADDR;
 
     //check irq and swi vector instructions
 	if (check_vector((int *)SWI_VECT_ADDR) == FALSE) {
@@ -149,13 +158,11 @@ int kmain(int argc, char** argv, uint32_t table)
     printf("user stack is set up\n");
 
     //set up irq stack
-    irqTop = malloc(4*32);
+    irqTop = (unsigned *)0xa3efffff;
     if (irqTop == NULL) {
         printf("mallocing irq stack failed\n");
         return 0xe3303;
     } 
-
-    irqTop = irqTop+31;
 
     /** Jump to user program. **/
     int usr_prog_status = user_setup(spTop);
@@ -169,9 +176,6 @@ int kmain(int argc, char** argv, uint32_t table)
     //restore IRQ handler
     *irq_handler_addr = irq_instr_1;
     *(irq_handler_addr + 1) = irq_instr_2;
-
-    //free irq stack
-    free(irqTop);
 
 	return usr_prog_status;
 }
@@ -258,38 +262,36 @@ ssize_t read_handler(int fd, void *buf, size_t count) {
 }
 
 //handler for time_swi, trigger interrupt
-unsigned long timer_handler() {
+unsigned timer_handler() {
     
-    return get_timer(base_time);
+    // get the current time from the OSCR
+    unsigned current_time = *(unsigned *)OSCR0_ADDR;
+
+    // get the time since base time
+    unsigned time_elapsed = current_time - base_time;
+    
+    // convert clock cycles to milliseconds
+    return time_elapsed / CLOCK_TO_MILLI;
+
 }
 
 //handler for sleep_swi, triggers interrupt
-void sleep_handler(unsigned long millis) {
-
-    /*
-    //pointers to IC registers we need
-    volatile int* ICMR = (volatile int *) ICMR_ADDR;
-    volatile int* ICLR = (volatile int *) ICLR_ADDR;
-
-    //pointers to OS timer registers
-    volatile int* OIER = (volatile int *) OIER_ADDR;
-    volatile int* OSSR = (volatile int *) OSSR_ADDR;
-    //volatile int* OSMR0 = (volatile int *) OSMR0_ADDR;
-
-    *ICLR = (*ICLR & 0); //enable IRQ
-    *ICMR = (*ICMR & ASSERT_26); //mask all interrupts besides Match Timer 0
-    *OIER = (*OIER & 0xFFFFFFF1); //allow matches to trigger interrupts
-    *OSSR = (*OSSR & 0xFFFFFFF1); //hopefully this triggers an interrupt
-    //*OSMR0 = *((volatile int *) (millis * CLOCK_TO_MILLI)
-    */
-
+void sleep_handler(unsigned millis) {
 
     sleep_done = 0;
 
-    // set the OSMR0 to time + n * millies
+    unsigned delta_time = CLOCK_TO_MILLI * millis;
 
+    // get the current time from oscr
+    unsigned current_time = *(unsigned *)OSCR0_ADDR;
+    printf("current time: %u\n", current_time);
+
+    // set the time we want the irq to go off
+    *(unsigned *)OSMR0_ADDR = current_time + delta_time;
+
+    // wait for the irq, then return
     while (sleep_done == 0) {
-
+        // do nothing, just wait
     }
 
 }
@@ -297,7 +299,6 @@ void sleep_handler(unsigned long millis) {
 /* C_SWI_Handler uses SWI number to call the appropriate function. */
 int C_SWI_Handler(int swiNum, int *regs) {
     int count = 0;
-    unsigned long ret;
     switch (swiNum) {
         // ssize_t read(int fd, void *buf, size_t count);
         case READ_SWI:
@@ -312,12 +313,11 @@ int C_SWI_Handler(int swiNum, int *regs) {
             exit_handler((int) regs[0]); // never returns
             break;
         case TIME_SWI:
-            ret = timer_handler();
-            count = (int)ret;
+            count = timer_handler();
             break;
         case SLEEP_SWI:
             printf("got sleep swi\n");
-            sleep_handler((unsigned long)regs[0]);
+            sleep_handler((unsigned) regs[0]);
             break;
         default:
             printf("Error in ref C_SWI_Handler: Invalid SWI number.");
@@ -328,8 +328,14 @@ int C_SWI_Handler(int swiNum, int *regs) {
 }
 
 /* C_IRQ_Handler uses IRQ number to perform appropriate action */
-int C_IRQ_Handler(int irqNum) {
-    //volatile int* OSMR0 = (volatile int *) OSMR0_ADDR;
-    printf("I like the number %x\n",irqNum);
-    return 0xa00a;
+void C_IRQ_Handler() {
+    
+    printf("Got an IRQ!\n");
+
+    volatile unsigned current_interrupts = *(unsigned *)ICPR_ADDR;
+
+    if (current_interrupts & ASSERT_26) {
+        sleep_done = 1;
+    }
+
 }

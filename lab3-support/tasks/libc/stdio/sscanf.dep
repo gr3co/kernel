@@ -1,17 +1,17 @@
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/stdio/sscanf.o:  \
- /home/ramsey/Documents/lab3/lab3-support/tasks/libc/stdio/sscanf.c \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/stdio.h \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/stdarg.h \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/sys/types.h \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/bits/types.h \
-  /home/ramsey/Documents/lab3/lab3-support/tasks/libc/stdio/doscan.h
+/root/kernel/lab3-support/tasks/libc/stdio/sscanf.o:  \
+ /root/kernel/lab3-support/tasks/libc/stdio/sscanf.c \
+  /root/kernel/lab3-support/tasks/libc/include/stdio.h \
+  /root/kernel/lab3-support/tasks/libc/include/stdarg.h \
+  /root/kernel/lab3-support/tasks/libc/include/sys/types.h \
+  /root/kernel/lab3-support/tasks/libc/include/bits/types.h \
+  /root/kernel/lab3-support/tasks/libc/stdio/doscan.h
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/stdio.h:
+/root/kernel/lab3-support/tasks/libc/include/stdio.h:
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/stdarg.h:
+/root/kernel/lab3-support/tasks/libc/include/stdarg.h:
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/sys/types.h:
+/root/kernel/lab3-support/tasks/libc/include/sys/types.h:
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/include/bits/types.h:
+/root/kernel/lab3-support/tasks/libc/include/bits/types.h:
 
-/home/ramsey/Documents/lab3/lab3-support/tasks/libc/stdio/doscan.h:
+/root/kernel/lab3-support/tasks/libc/stdio/doscan.h:
