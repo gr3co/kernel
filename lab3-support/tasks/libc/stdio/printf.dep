@@ -1,23 +1,24 @@
-/root/kernel/lab3-support/tasks/libc/stdio/printf.o:  \
- /root/kernel/lab3-support/tasks/libc/stdio/printf.c \
-  /root/kernel/lab3-support/tasks/libc/include/stdio.h \
-  /root/kernel/lab3-support/tasks/libc/include/stdarg.h \
-  /root/kernel/lab3-support/tasks/libc/include/sys/types.h \
-  /root/kernel/lab3-support/tasks/libc/include/bits/types.h \
-  /root/kernel/lab3-support/tasks/libc/include/unistd.h \
-  /root/kernel/lab3-support/tasks/libc/include/bits/fileno.h \
-  /root/kernel/lab3-support/tasks/libc/stdio/doprnt.h
+ \
+ /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/stdio/printf.o:  \
+ /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/stdio/printf.c \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/stdio.h \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/stdarg.h \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/sys/types.h \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/bits/types.h \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/unistd.h \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/bits/fileno.h \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/stdio/doprnt.h
 
-/root/kernel/lab3-support/tasks/libc/include/stdio.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/stdio.h:
 
-/root/kernel/lab3-support/tasks/libc/include/stdarg.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/stdarg.h:
 
-/root/kernel/lab3-support/tasks/libc/include/sys/types.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/sys/types.h:
 
-/root/kernel/lab3-support/tasks/libc/include/bits/types.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/bits/types.h:
 
-/root/kernel/lab3-support/tasks/libc/include/unistd.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/unistd.h:
 
-/root/kernel/lab3-support/tasks/libc/include/bits/fileno.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/bits/fileno.h:
 
-/root/kernel/lab3-support/tasks/libc/stdio/doprnt.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/stdio/doprnt.h:

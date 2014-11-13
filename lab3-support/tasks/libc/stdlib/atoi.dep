@@ -1,11 +1,11 @@
-/root/kernel/lab3-support/tasks/libc/stdlib/atoi.o:  \
- /root/kernel/lab3-support/tasks/libc/stdlib/atoi.c \
-  /root/kernel/lab3-support/tasks/libc/include/stdlib.h \
-  /root/kernel/lab3-support/tasks/libc/include/ctype.h \
-  /root/kernel/lab3-support/tasks/libc/include/inline.h
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/stdlib/atoi.o:  \
+ /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/stdlib/atoi.c \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/stdlib.h \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/ctype.h \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/inline.h
 
-/root/kernel/lab3-support/tasks/libc/include/stdlib.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/stdlib.h:
 
-/root/kernel/lab3-support/tasks/libc/include/ctype.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/ctype.h:
 
-/root/kernel/lab3-support/tasks/libc/include/inline.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/inline.h:

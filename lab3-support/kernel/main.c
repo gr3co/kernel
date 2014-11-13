@@ -7,6 +7,7 @@
 #include <arm/exception.h>
 #include <arm/interrupt.h>
 #include <arm/timer.h>
+#include <arm/reg.h>
 
 #include "globals.h"
 #include "swi_handler.h"
@@ -23,8 +24,7 @@ int irq_instr_2;
 
 unsigned *irqTop;
 
-unsigned base_time;
-volatile int sleep_done;
+volatile unsigned current_time; //keeps track of system time in milliseconds
 
 typedef enum {FALSE, TRUE} bool;
 
@@ -48,17 +48,6 @@ typedef enum {FALSE, TRUE} bool;
 #define SFROM_END 0x00ffffff
 #define SDRAM_START 0xa0000000
 #define SDRAM_END 0xa3ffffff
-
-#define ICPR_ADDR 0x40d00010
-#define ICMR_ADDR 0x40d00004
-#define ICLR_ADDR 0x40d00008
-#define ASSERT_26 0x02000000
-
-#define OSMR0_ADDR 0x40a00000
-#define OIER_ADDR 0x40a0001c
-#define OSCR0_ADDR 0x40a00010
-#define OSSR_ADDR 0x40a00014
-#define CLOCK_TO_MILLI 30800
 
 /* Checks the Vector Table at vector for an appropriate address. */
 bool check_vector(int* vector) {
@@ -112,39 +101,36 @@ int kmain(int argc, char** argv, uint32_t table)
 
     //variable declarations
     int *swi_handler_addr;
-    int *irq_handler_addr;
+    int *irq_handler_addr; 
 
-    //set the sleep variable
-    sleep_done = 0;
+    if (check_vector((int *)IRQ_VECT_ADDR) == FALSE) {
+        return BAD_CODE;
+    }
+    printf("irq vector is good\n");
+    
+    irq_handler_addr = wire_in(IRQ_VECT_ADDR,0);
+    printf("IRQ handler wired in\n");
 
-    // unmask the sleep irq thingie
-    *(unsigned volatile*)ICMR_ADDR |= ASSERT_26;
+    reg_set(INT_ICMR_ADDR, (1<<26));    //enable OSTIMER 0 match interrupts
+    reg_write(INT_ICLR_ADDR,0);         //set all interrupts to IRQ
+    reg_write(OSTMR_OIER_ADDR,OSTMR_OIER_E0);   //enable channel 0 on the OS Timer
+    reg_write(OSTMR_OSMR_ADDR(0),OSTMR_FREQ/100); //put 10 milliseconds in OSMR0
 
-    // only irq's
-    *(unsigned volatile*)ICLR_ADDR = 0;
-
-    // only allow match register 0
-    *(unsigned volatile*)OIER_ADDR |= 1;
-
-    // get the base time
-    base_time = *(unsigned volatile*)OSCR0_ADDR;
+    current_time = reg_read(OSTMR_OSCR_ADDR);   //initialize global time variable
+    //unmask_irq();                               //enable IRQ's
+    reg_write(OSTMR_OSCR_ADDR,0);               //reset the clock
 
     //check irq and swi vector instructions
 	if (check_vector((int *)SWI_VECT_ADDR) == FALSE) {
         return BAD_CODE;
     }
     printf("swi vector is good\n");
-    if (check_vector((int *)IRQ_VECT_ADDR) == FALSE) {
-        return BAD_CODE;
-    }
-    printf("irq vector is good\n");
 
-    /** Wire in the SWI and IRQ handlers. **/
+    /** Wire in the SWI handler. **/
     // Jump offset already incorporates PC offset. Usually 0x10 or 0x14.
     swi_handler_addr = wire_in(SWI_VECT_ADDR,1);
     printf("SWI handler wired in\n");
-    irq_handler_addr = wire_in(IRQ_VECT_ADDR,0);
-    printf("IRQ handler wired in\n");
+    
 
     // Copy argc and argv to user stack in the right order.
     int *spTop = ((int *) USER_STACK_TOP) - 1;
@@ -261,39 +247,16 @@ ssize_t read_handler(int fd, void *buf, size_t count) {
     return i;
 }
 
-//handler for time_swi, trigger interrupt
+//handler for time_swi
 unsigned timer_handler() {
-    
-    // get the current time from the OSCR
-    unsigned volatile current_time = *(unsigned volatile*)OSCR0_ADDR;
-
-    // get the time since base time
-    unsigned time_elapsed = current_time - base_time;
-    
-    // convert clock cycles to milliseconds
-    return time_elapsed / CLOCK_TO_MILLI;
-
+    return current_time;
 }
 
 //handler for sleep_swi, triggers interrupt
 void sleep_handler(unsigned millis) {
-
-    sleep_done = 0;
-
-    unsigned delta_time = CLOCK_TO_MILLI * millis;
-
-    // get the current time from oscr
-    unsigned volatile current_time = *(unsigned *)OSCR0_ADDR;
-
-    // set the time we want the irq to go off
-    *(unsigned volatile*)OSMR0_ADDR = current_time + delta_time;
-    printf("OSMR: %#x\n", *(unsigned volatile*)OSMR0_ADDR);
-
-    // wait for the irq, then return
-    while (sleep_done == 0) {
-        printf("\rCurrent time: %#x", *(unsigned volatile*)OSCR0_ADDR);
-    }
-
+    unsigned stop = current_time + millis;
+    while(current_time < stop);
+    return;
 }
 
 /* C_SWI_Handler uses SWI number to call the appropriate function. */
@@ -313,28 +276,26 @@ int C_SWI_Handler(int swiNum, int *regs) {
             exit_handler((int) regs[0]); // never returns
             break;
         case TIME_SWI:
-            count = timer_handler();
+            count = (int)timer_handler();
             break;
         case SLEEP_SWI:
             sleep_handler((unsigned) regs[0]);
             break;
         default:
-            printf("Error in ref C_SWI_Handler: Invalid SWI number.");
+            printf("Error in ref C_SWI_Handler: Invalid SWI number.\n");
             exit_handler(BAD_CODE); // never returns
     }
 
     return count;
 }
 
-/* C_IRQ_Handler uses IRQ number to perform appropriate action */
+/* C_IRQ_Handler updates system time whenever OS timer match 0 IRQ is serviced */
 void C_IRQ_Handler() {
-    
-    printf("Got an IRQ!\n");
-
-    unsigned volatile current_interrupts = *(unsigned volatile*)ICPR_ADDR;
-
-    if (current_interrupts & ASSERT_26) {
-        sleep_done = 1;
+    //printf("%d",reg_read(OSTMR_OSCR_ADDR));
+    if (reg_read(INT_ICPR_ADDR) & (1 << 26)) {
+        reg_set(OSTMR_OSSR_ADDR,OSTMR_OSSR_M0); //handshake
+        reg_write(OSTMR_OSCR_ADDR,0); //reset timer
+        current_time += 10;
     }
 
 }
