@@ -1,4 +1,8 @@
-@irq handler
+@ irq_handler.S: handle IRQ's when they're called
+@
+@ Author: Stephen Greco <sgreco@andrew.cmu.edu>
+@ Author: Ramsey Natour <rnatour@andrew.cmu.edu>
+@ Date:   11/12/2014 20:00
 
 	.extern C_IRQ_Handler
 	.extern irqTop

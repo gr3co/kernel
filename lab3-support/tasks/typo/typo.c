@@ -27,7 +27,7 @@ int main(int argc, char** argv)
 		n = read(STDIN_FILENO,buf,BUFSIZE);
 		end = time();
 		write(STDOUT_FILENO,buf,n);
-		printf("%d.%ds\n",(start-end)/100,(start-end) % 100);
+		printf("%d.%ds\n",(end - start)/1000, ((end - start) % 1000) / 100);
 	}
 	
 	//never gets here
