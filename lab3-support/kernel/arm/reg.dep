@@ -1,11 +1,11 @@
-/root/kernel/lab3-support/kernel/arm/reg.o:  \
- /root/kernel/lab3-support/kernel/arm/reg.c \
-  /root/kernel/lab3-support/kernel/include/types.h \
-  /root/kernel/lab3-support/kernel/include/arm/reg.h \
-  /root/kernel/lab3-support/kernel/include/inline.h
+/home/ramsey/Documents/lab3/kernel/lab3-support/kernel/arm/reg.o:  \
+ /home/ramsey/Documents/lab3/kernel/lab3-support/kernel/arm/reg.c \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/kernel/include/types.h \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/kernel/include/arm/reg.h \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/kernel/include/inline.h
 
-/root/kernel/lab3-support/kernel/include/types.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/kernel/include/types.h:
 
-/root/kernel/lab3-support/kernel/include/arm/reg.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/kernel/include/arm/reg.h:
 
-/root/kernel/lab3-support/kernel/include/inline.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/kernel/include/inline.h:

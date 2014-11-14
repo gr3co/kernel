@@ -1,8 +1,8 @@
-/root/kernel/lab3-support/tasks/libc/swi/exit.o:  \
- /root/kernel/lab3-support/tasks/libc/swi/exit.S \
-  /root/kernel/lab3-support/tasks/libc/include/asm.h \
-  /root/kernel/lab3-support/tasks/libc/include/bits/swi.h
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/swi/exit.o:  \
+ /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/swi/exit.S \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/asm.h \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/bits/swi.h
 
-/root/kernel/lab3-support/tasks/libc/include/asm.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/asm.h:
 
-/root/kernel/lab3-support/tasks/libc/include/bits/swi.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/bits/swi.h:

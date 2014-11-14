@@ -1,14 +1,14 @@
-/root/kernel/lab3-support/tasks/rot13/rot13.o:  \
- /root/kernel/lab3-support/tasks/rot13/rot13.c \
-  /root/kernel/lab3-support/tasks/libc/include/unistd.h \
-  /root/kernel/lab3-support/tasks/libc/include/bits/fileno.h \
-  /root/kernel/lab3-support/tasks/libc/include/sys/types.h \
-  /root/kernel/lab3-support/tasks/libc/include/bits/types.h
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/rot13/rot13.o:  \
+ /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/rot13/rot13.c \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/unistd.h \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/bits/fileno.h \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/sys/types.h \
+  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/bits/types.h
 
-/root/kernel/lab3-support/tasks/libc/include/unistd.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/unistd.h:
 
-/root/kernel/lab3-support/tasks/libc/include/bits/fileno.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/bits/fileno.h:
 
-/root/kernel/lab3-support/tasks/libc/include/sys/types.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/sys/types.h:
 
-/root/kernel/lab3-support/tasks/libc/include/bits/types.h:
+/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/bits/types.h:
