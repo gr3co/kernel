@@ -1,0 +1,20 @@
+/root/kernel/lab3-support/tasks/libc/stdlib/strtoul.o:  \
+ /root/kernel/lab3-support/tasks/libc/stdlib/strtoul.c \
+  /root/kernel/lab3-support/tasks/libc/include/stdlib.h \
+  /root/kernel/lab3-support/tasks/libc/include/ctype.h \
+  /root/kernel/lab3-support/tasks/libc/include/inline.h \
+  /root/kernel/lab3-support/tasks/libc/include/string.h \
+  /root/kernel/lab3-support/tasks/libc/include/sys/types.h \
+  /root/kernel/lab3-support/tasks/libc/include/bits/types.h
+
+/root/kernel/lab3-support/tasks/libc/include/stdlib.h:
+
+/root/kernel/lab3-support/tasks/libc/include/ctype.h:
+
+/root/kernel/lab3-support/tasks/libc/include/inline.h:
+
+/root/kernel/lab3-support/tasks/libc/include/string.h:
+
+/root/kernel/lab3-support/tasks/libc/include/sys/types.h:
+
+/root/kernel/lab3-support/tasks/libc/include/bits/types.h:

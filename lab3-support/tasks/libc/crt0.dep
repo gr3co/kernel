@@ -1,0 +1,8 @@
+/root/kernel/lab3-support/tasks/libc/crt0.o:  \
+ /root/kernel/lab3-support/tasks/libc/crt0.S \
+  /root/kernel/lab3-support/tasks/libc/include/asm.h \
+  /root/kernel/lab3-support/tasks/libc/include/bits/swi.h
+
+/root/kernel/lab3-support/tasks/libc/include/asm.h:
+
+/root/kernel/lab3-support/tasks/libc/include/bits/swi.h:

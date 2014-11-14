@@ -1,0 +1,8 @@
+/root/kernel/lab3-support/tasks/libc/stdlib/ctype.o:  \
+ /root/kernel/lab3-support/tasks/libc/stdlib/ctype.c \
+  /root/kernel/lab3-support/tasks/libc/include/ctype.h \
+  /root/kernel/lab3-support/tasks/libc/include/inline.h
+
+/root/kernel/lab3-support/tasks/libc/include/ctype.h:
+
+/root/kernel/lab3-support/tasks/libc/include/inline.h:

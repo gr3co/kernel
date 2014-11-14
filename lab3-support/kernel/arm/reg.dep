@@ -1,0 +1,11 @@
+/root/kernel/lab3-support/kernel/arm/reg.o:  \
+ /root/kernel/lab3-support/kernel/arm/reg.c \
+  /root/kernel/lab3-support/kernel/include/types.h \
+  /root/kernel/lab3-support/kernel/include/arm/reg.h \
+  /root/kernel/lab3-support/kernel/include/inline.h
+
+/root/kernel/lab3-support/kernel/include/types.h:
+
+/root/kernel/lab3-support/kernel/include/arm/reg.h:
+
+/root/kernel/lab3-support/kernel/include/inline.h:

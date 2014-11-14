@@ -1,0 +1,26 @@
+/root/kernel/lab3-support/kernel/assert.o:  \
+ /root/kernel/lab3-support/kernel/assert.c \
+  /root/kernel/lab3-support/kernel/include/assert.h \
+  /root/kernel/lab3-support/kernel/include/stdarg.h \
+  /root/kernel/lab3-support/uboot/include/exports.h \
+  /root/kernel/lab3-support/kernel/include/types.h \
+  /root/kernel/lab3-support/uboot/include/_exports.h \
+  /root/kernel/lab3-support/kernel/include/arm/psr.h \
+  /root/kernel/lab3-support/kernel/include/inline.h \
+  /root/kernel/lab3-support/kernel/include/arm/exception.h
+
+/root/kernel/lab3-support/kernel/include/assert.h:
+
+/root/kernel/lab3-support/kernel/include/stdarg.h:
+
+/root/kernel/lab3-support/uboot/include/exports.h:
+
+/root/kernel/lab3-support/kernel/include/types.h:
+
+/root/kernel/lab3-support/uboot/include/_exports.h:
+
+/root/kernel/lab3-support/kernel/include/arm/psr.h:
+
+/root/kernel/lab3-support/kernel/include/inline.h:
+
+/root/kernel/lab3-support/kernel/include/arm/exception.h:

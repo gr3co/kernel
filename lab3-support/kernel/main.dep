@@ -1,0 +1,56 @@
+/root/kernel/lab3-support/kernel/main.o:  \
+ /root/kernel/lab3-support/kernel/main.c \
+  /root/kernel/lab3-support/uboot/include/exports.h \
+  /root/kernel/lab3-support/kernel/include/types.h \
+  /root/kernel/lab3-support/kernel/include/stdarg.h \
+  /root/kernel/lab3-support/uboot/include/_exports.h \
+  /root/kernel/lab3-support/kernel/include/bits/errno.h \
+  /root/kernel/lab3-support/kernel/include/bits/fileno.h \
+  /root/kernel/lab3-support/kernel/include/bits/swi.h \
+  /root/kernel/lab3-support/kernel/include/arm/psr.h \
+  /root/kernel/lab3-support/kernel/include/inline.h \
+  /root/kernel/lab3-support/kernel/include/arm/exception.h \
+  /root/kernel/lab3-support/kernel/include/arm/interrupt.h \
+  /root/kernel/lab3-support/kernel/include/arm/timer.h \
+  /root/kernel/lab3-support/kernel/include/arm/reg.h \
+  /root/kernel/lab3-support/kernel/globals.h \
+  /root/kernel/lab3-support/kernel/swi_handler.h \
+  /root/kernel/lab3-support/kernel/irq_handler.h \
+  /root/kernel/lab3-support/kernel/user_setup.h \
+  /root/kernel/lab3-support/kernel/exit_handler.h
+
+/root/kernel/lab3-support/uboot/include/exports.h:
+
+/root/kernel/lab3-support/kernel/include/types.h:
+
+/root/kernel/lab3-support/kernel/include/stdarg.h:
+
+/root/kernel/lab3-support/uboot/include/_exports.h:
+
+/root/kernel/lab3-support/kernel/include/bits/errno.h:
+
+/root/kernel/lab3-support/kernel/include/bits/fileno.h:
+
+/root/kernel/lab3-support/kernel/include/bits/swi.h:
+
+/root/kernel/lab3-support/kernel/include/arm/psr.h:
+
+/root/kernel/lab3-support/kernel/include/inline.h:
+
+/root/kernel/lab3-support/kernel/include/arm/exception.h:
+
+/root/kernel/lab3-support/kernel/include/arm/interrupt.h:
+
+/root/kernel/lab3-support/kernel/include/arm/timer.h:
+
+/root/kernel/lab3-support/kernel/include/arm/reg.h:
+
+/root/kernel/lab3-support/kernel/globals.h:
+
+/root/kernel/lab3-support/kernel/swi_handler.h:
+
+/root/kernel/lab3-support/kernel/irq_handler.h:
+
+/root/kernel/lab3-support/kernel/user_setup.h:
+
+/root/kernel/lab3-support/kernel/exit_handler.h:

@@ -1,0 +1,11 @@
+/root/kernel/lab3-support/tasks/libc/string/memmove.o:  \
+ /root/kernel/lab3-support/tasks/libc/string/memmove.c \
+  /root/kernel/lab3-support/tasks/libc/include/string.h \
+  /root/kernel/lab3-support/tasks/libc/include/sys/types.h \
+  /root/kernel/lab3-support/tasks/libc/include/bits/types.h
+
+/root/kernel/lab3-support/tasks/libc/include/string.h:
+
+/root/kernel/lab3-support/tasks/libc/include/sys/types.h:
+
+/root/kernel/lab3-support/tasks/libc/include/bits/types.h:
