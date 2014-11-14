@@ -8,11 +8,19 @@
     .text
 
     .global irq_handler
+    .extern global_data
+    .extern irqTop
 
 irq_handler:
 
+    ldr     sp, =irqTop
+    ldr     sp, [sp]
+
 	sub     sp, sp, #4
     stmfd   sp!, {r0-r12, lr}
+
+    ldr r8, =global_data
+    ldr r8, [r8]
 
     @ get spsr into general purpose (gp) registers
     mrs     r2, spsr
@@ -21,10 +29,10 @@ irq_handler:
     str     r2, [sp, #14*4]
 
     @set stack pointer to heap allocated irq stack
-	ldr 	r2, =stackPtr
-    str     sp, [r2]
-    ldr     r2, =irqTop
-    ldr     sp, [r2]
+	@ldr 	r2, =stackPtr
+    @str     sp, [r2]
+    @ldr     r2, =irqTop
+    @ldr     sp, [r2]
 
     @ldr 	r2, [r2] 	@r2 -> irqTop
 
@@ -40,8 +48,8 @@ irq_handler:
     @restore old stack
     @ldr r2, [sp]		@r2 = oldSP
     @mov sp, r2 			@sp = oldSp
-    ldr     r2, =stackPtr
-    ldr     sp, [r2]
+    @ldr     r2, =stackPtr
+    @ldr     sp, [r2]
 
     @ restore spsr
     ldr     r2, [sp, #14*4]

@@ -1,8 +1,0 @@
-/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/swi/sleep.o:  \
- /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/swi/sleep.S \
-  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/asm.h \
-  /home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/bits/swi.h
-
-/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/asm.h:
-
-/home/ramsey/Documents/lab3/kernel/lab3-support/tasks/libc/include/bits/swi.h:

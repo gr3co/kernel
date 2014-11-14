@@ -50,7 +50,7 @@ typedef enum {FALSE, TRUE} bool;
 #define SDRAM_START 0xa0000000
 #define SDRAM_END 0xa3ffffff
 
-#define CLOCK_TO_MILLI 30800
+#define CLOCK_TO_10_MILLI OSTMR_FREQ / 100
 
 /* Checks the Vector Table at vector for an appropriate address. */
 bool check_vector(int* vector) {
@@ -118,9 +118,9 @@ int kmain(int argc, char** argv, uint32_t table)
     reg_set(INT_ICMR_ADDR, (1<<26));    //enable OSTIMER 0 match interrupts
     reg_write(INT_ICLR_ADDR,0);         //set all interrupts to IRQ
     reg_write(OSTMR_OIER_ADDR,OSTMR_OIER_E0);   //enable channel 0 on the OS Timer
-    //unmask_irq();                               //enable IRQ's
     reg_write(OSTMR_OSCR_ADDR, 0);               //reset the clock
-    reg_write(OSTMR_OSMR_ADDR(0), CLOCK_TO_MILLI * 10); // put 10 millis in thingie
+    reg_write(OSTMR_OSMR_ADDR(0), (unsigned)CLOCK_TO_10_MILLI); // put 10 millis + current time in OSMR
+    irq_enable();                               //enable IRQ's
 
     //check irq and swi vector instructions
 	if (check_vector((int *)SWI_VECT_ADDR) == FALSE) {
@@ -165,6 +165,10 @@ int kmain(int argc, char** argv, uint32_t table)
     *irq_handler_addr = irq_instr_1;
     *(irq_handler_addr + 1) = irq_instr_2;
 
+    //restore r8
+    restore_r8();
+    printf("r8 restored\n");
+    
 	return usr_prog_status;
 }
 
@@ -256,8 +260,12 @@ unsigned timer_handler() {
 
 //handler for sleep_swi, triggers interrupt
 void sleep_handler(unsigned millis) {
-    unsigned stop = current_time + millis;
-    while(current_time < stop);
+    printf("time to sleep: %d\n",millis);
+    printf("started sleeping: %d\n",current_time);
+    unsigned stop = current_time + millis; //interestingly, hardcoding this value as current_time plus 2000 makes it work whereas using the arg millis makes it fail
+    printf("time to sleep: %d\n",stop);
+    while(current_time < stop);          //even though printing millis yields 2000
+    printf("stopped sleeping: %d\n",current_time);
     return;
 }
 
@@ -293,12 +301,11 @@ int C_SWI_Handler(int swiNum, int *regs) {
 
 /* C_IRQ_Handler updates system time whenever OS timer match 0 IRQ is serviced */
 void C_IRQ_Handler() {
-    //printf("%d",reg_read(OSTMR_OSCR_ADDR));
+    //printf("current_time: %d\n",current_time);
     if (reg_read(INT_ICPR_ADDR) & (1 << 26)) {
         current_time += 10;
         reg_set(OSTMR_OSSR_ADDR,OSTMR_OSSR_M0); //handshake
-        reg_write(OSTMR_OSCR_ADDR,0); //reset timer
-        reg_write(OSTMR_OSMR_ADDR(0), CLOCK_TO_MILLI * 10); // call again in 10 millis
+        reg_write(OSTMR_OSMR_ADDR(0), (unsigned)CLOCK_TO_10_MILLI + reg_read(OSTMR_OSCR_ADDR)); // call again in 10 millis
     }
 
 }

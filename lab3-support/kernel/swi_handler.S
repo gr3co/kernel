@@ -12,11 +12,15 @@
     .text
 
     .global swi_handler
+    .extern global_data
     
 swi_handler:
 
     sub     sp, sp, #4
     stmfd   sp!, {r0-r12, lr}
+
+    ldr r8, =global_data
+    ldr r8, [r8]
 
     mrs     r2, cpsr
     bic     r2, r2, #0x080  @ Unmask the IRQ bit.

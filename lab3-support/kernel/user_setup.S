@@ -38,6 +38,10 @@ user_setup:
     @ set up user stack from spTop passed in from kernel.c
     mov     sp, r0
 
+    @load global_data back into r8
+    @ldr     r8, =global_data
+    @ldr     r8, [r8]
+
     @ go to user program
     ldr     pc, =0xa0000000
 
