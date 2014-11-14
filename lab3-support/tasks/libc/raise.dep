@@ -1,0 +1,17 @@
+/root/kernel/lab3-support/tasks/libc/raise.o:  \
+ /root/kernel/lab3-support/tasks/libc/raise.c \
+  /root/kernel/lab3-support/tasks/libc/include/stdio.h \
+  /root/kernel/lab3-support/tasks/libc/include/stdarg.h \
+  /root/kernel/lab3-support/tasks/libc/include/sys/types.h \
+  /root/kernel/lab3-support/tasks/libc/include/bits/types.h \
+  /root/kernel/lab3-support/tasks/libc/include/stdlib.h
+
+/root/kernel/lab3-support/tasks/libc/include/stdio.h:
+
+/root/kernel/lab3-support/tasks/libc/include/stdarg.h:
+
+/root/kernel/lab3-support/tasks/libc/include/sys/types.h:
+
+/root/kernel/lab3-support/tasks/libc/include/bits/types.h:
+
+/root/kernel/lab3-support/tasks/libc/include/stdlib.h:

@@ -22,6 +22,7 @@ int swi_instr_2;
 int irq_instr_1;
 int irq_instr_2;
 
+unsigned irq_stack[32];
 unsigned *irqTop;
 unsigned *stackPtr;
 
@@ -146,7 +147,8 @@ int kmain(int argc, char** argv, uint32_t table)
     printf("user stack is set up\n");
 
     //set up irq stack
-    irqTop = (unsigned *)0xa3efffff;
+    irqTop = &(irq_stack[32]);
+    printf("irq_top: %#x\n", (unsigned) irqTop);
     if (irqTop == NULL) {
         printf("mallocing irq stack failed\n");
         return 0xe3303;
@@ -260,12 +262,13 @@ unsigned timer_handler() {
 
 //handler for sleep_swi, triggers interrupt
 void sleep_handler(unsigned millis) {
-    printf("time to sleep: %d\n",millis);
-    printf("started sleeping: %d\n",current_time);
-    unsigned stop = current_time + millis; //interestingly, hardcoding this value as current_time plus 2000 makes it work whereas using the arg millis makes it fail
-    printf("time to sleep: %d\n",stop);
-    while(current_time < stop);          //even though printing millis yields 2000
-    printf("stopped sleeping: %d\n",current_time);
+    //printf("time to sleep: %d\n",millis);
+    //printf("started sleeping: %d\n",current_time);
+    volatile unsigned stop = current_time + millis; //interestingly, hardcoding this value as current_time plus 2000 makes it work whereas using the arg millis makes it fail
+    //printf("time to sleep: %d\n",stop);
+    while(current_time < stop); 
+    //even though printing millis yields 2000
+    //printf("stopped sleeping: %d\n",current_time);
     return;
 }
 
@@ -301,7 +304,6 @@ int C_SWI_Handler(int swiNum, int *regs) {
 
 /* C_IRQ_Handler updates system time whenever OS timer match 0 IRQ is serviced */
 void C_IRQ_Handler() {
-    //printf("current_time: %d\n",current_time);
     if (reg_read(INT_ICPR_ADDR) & (1 << 26)) {
         current_time += 10;
         reg_set(OSTMR_OSSR_ADDR,OSTMR_OSSR_M0); //handshake

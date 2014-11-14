@@ -1,0 +1,26 @@
+/root/kernel/lab3-support/tasks/twister/twister.o:  \
+ /root/kernel/lab3-support/tasks/twister/twister.c \
+  /root/kernel/lab3-support/tasks/libc/include/stdio.h \
+  /root/kernel/lab3-support/tasks/libc/include/stdarg.h \
+  /root/kernel/lab3-support/tasks/libc/include/sys/types.h \
+  /root/kernel/lab3-support/tasks/libc/include/bits/types.h \
+  /root/kernel/lab3-support/tasks/libc/include/stdlib.h \
+  /root/kernel/lab3-support/tasks/libc/include/string.h \
+  /root/kernel/lab3-support/tasks/libc/include/ctype.h \
+  /root/kernel/lab3-support/tasks/libc/include/inline.h
+
+/root/kernel/lab3-support/tasks/libc/include/stdio.h:
+
+/root/kernel/lab3-support/tasks/libc/include/stdarg.h:
+
+/root/kernel/lab3-support/tasks/libc/include/sys/types.h:
+
+/root/kernel/lab3-support/tasks/libc/include/bits/types.h:
+
+/root/kernel/lab3-support/tasks/libc/include/stdlib.h:
+
+/root/kernel/lab3-support/tasks/libc/include/string.h:
+
+/root/kernel/lab3-support/tasks/libc/include/ctype.h:
+
+/root/kernel/lab3-support/tasks/libc/include/inline.h:

@@ -1,0 +1,8 @@
+/root/kernel/lab3-support/tasks/libc/swi/write.o:  \
+ /root/kernel/lab3-support/tasks/libc/swi/write.S \
+  /root/kernel/lab3-support/tasks/libc/include/asm.h \
+  /root/kernel/lab3-support/tasks/libc/include/bits/swi.h
+
+/root/kernel/lab3-support/tasks/libc/include/asm.h:
+
+/root/kernel/lab3-support/tasks/libc/include/bits/swi.h:

@@ -1,0 +1,5 @@
+/root/kernel/lab3-support/tasks/libc/stdlib/rand.o:  \
+ /root/kernel/lab3-support/tasks/libc/stdlib/rand.c \
+  /root/kernel/lab3-support/tasks/libc/include/stdlib.h
+
+/root/kernel/lab3-support/tasks/libc/include/stdlib.h:

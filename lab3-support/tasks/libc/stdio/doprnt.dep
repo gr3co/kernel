@@ -1,0 +1,17 @@
+/root/kernel/lab3-support/tasks/libc/stdio/doprnt.o:  \
+ /root/kernel/lab3-support/tasks/libc/stdio/doprnt.c \
+  /root/kernel/lab3-support/tasks/libc/include/stdarg.h \
+  /root/kernel/lab3-support/tasks/libc/include/string.h \
+  /root/kernel/lab3-support/tasks/libc/include/sys/types.h \
+  /root/kernel/lab3-support/tasks/libc/include/bits/types.h \
+  /root/kernel/lab3-support/tasks/libc/stdio/doprnt.h
+
+/root/kernel/lab3-support/tasks/libc/include/stdarg.h:
+
+/root/kernel/lab3-support/tasks/libc/include/string.h:
+
+/root/kernel/lab3-support/tasks/libc/include/sys/types.h:
+
+/root/kernel/lab3-support/tasks/libc/include/bits/types.h:
+
+/root/kernel/lab3-support/tasks/libc/stdio/doprnt.h:

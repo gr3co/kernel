@@ -1,0 +1,14 @@
+/root/kernel/lab3-support/uboot/stubs.o:  \
+ /root/kernel/lab3-support/uboot/stubs.c \
+  /root/kernel/lab3-support/uboot/include/exports.h \
+  /root/kernel/lab3-support/kernel/include/types.h \
+  /root/kernel/lab3-support/kernel/include/stdarg.h \
+  /root/kernel/lab3-support/uboot/include/_exports.h
+
+/root/kernel/lab3-support/uboot/include/exports.h:
+
+/root/kernel/lab3-support/kernel/include/types.h:
+
+/root/kernel/lab3-support/kernel/include/stdarg.h:
+
+/root/kernel/lab3-support/uboot/include/_exports.h:
