@@ -12,11 +12,17 @@
 
 int main(int argc, char** argv)
 {
+	// start at 10 seconds
 	unsigned start = 10;
+
 	while (start > 0) {
+		// print the current remaining time
 		printf("\r%d  ", start--);
+		// wait a second before printing again
 		sleep(1000);
 	}
+
+	// oh no you've run out of time!
 	printf("\rBOOM!!!\n");
 	return 0;
 }
