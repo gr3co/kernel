@@ -176,13 +176,8 @@ int kmain(int argc, char** argv, uint32_t table)
 
     //restore r8
     restore_r8();
-<<<<<<< HEAD
-    printf("r8 restored\n");
 
-=======
-    
     // pass the return value from user program to uboot
->>>>>>> baf9eeed9731f4c38093c87b8a3e222888561e89
 	return usr_prog_status;
 }
 
@@ -275,24 +270,12 @@ unsigned timer_handler() {
 
 //handler for sleep_swi
 void sleep_handler(unsigned millis) {
-<<<<<<< HEAD
-    //printf("time to sleep: %d\n",millis);
-    //printf("started sleeping: %d\n",current_time);
-    volatile unsigned stop = current_time + millis; //interestingly, hardcoding this value as current_time plus 2000 makes it work whereas using the arg millis makes it fail
-    //printf("time to sleep: %d\n",stop);
-
-    while(current_time < stop); 
-    //even though printing millis yields 2000
-
-    //printf("stopped sleeping: %d\n",current_time);
-=======
     // calculate the "wake up" time
     volatile unsigned stop = current_time + millis;
 
     // wait for the timer to reach that time
     while(current_time < stop); 
 
->>>>>>> baf9eeed9731f4c38093c87b8a3e222888561e89
     return;
 }
 

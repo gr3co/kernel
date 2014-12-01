@@ -21,10 +21,10 @@
 #include <arm/reg.h>
 
 
-int swi_instr_1;
-int swi_instr_2;
-int irq_instr_1;
-int irq_instr_2;
+unsigned swi_instr_1;
+unsigned swi_instr_2;
+unsigned irq_instr_1;
+unsigned irq_instr_2;
 
 //keeps track of system time in milliseconds
 volatile unsigned current_time;
@@ -128,4 +128,49 @@ int kmain(int argc __attribute__((unused)), char** argv  __attribute__((unused))
     irq_enable();
 		
 	assert(0);        /* should never get here */
+}
+
+/* C_SWI_Handler uses SWI number to call the appropriate function. */
+int C_SWI_Handler(int swiNum, int *regs) {
+    int count = 0;
+    switch (swiNum) {
+        // ssize_t read(int fd, void *buf, size_t count);
+        case READ_SWI:
+            count = read_handler(regs[0], (void *) regs[1], (size_t) regs[2]);
+            break;
+        // ssize_t write(int fd, const void *buf, size_t count);
+        case WRITE_SWI:
+            count = write_handler((int) regs[0], (void *) regs[1], (size_t) regs[2]);
+            break;
+        case TIME_SWI:
+            count = (int)timer_handler();
+            break;
+        case SLEEP_SWI:
+            sleep_handler((unsigned) regs[0]);
+            break;
+        case 
+        default:
+            printf("Error in ref C_SWI_Handler: Invalid SWI number.\n");
+            exit_handler(BAD_CODE); // never returns
+    }
+
+    return count;
+}
+
+/* C_IRQ_Handler updates system time whenever OS timer match 0 IRQ is serviced */
+void C_IRQ_Handler() {
+
+    // ensure the irq is that from the match0 and counter0
+    if (reg_read(INT_ICPR_ADDR) & (1 << 26)) {
+        // update the current time
+        current_time += 10;
+
+        //handshake
+        reg_set(OSTMR_OSSR_ADDR,OSTMR_OSSR_M0);
+
+        // call again in 10 millis
+        unsigned new_time = (unsigned)CLOCK_TO_10_MILLI + reg_read(OSTMR_OSCR_ADDR);
+        reg_write(OSTMR_OSMR_ADDR(0), new_time);
+    }
+
 }

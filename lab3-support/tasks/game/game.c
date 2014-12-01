@@ -8,14 +8,11 @@
 #define ROUNDS 10
 int main() { 
 
-	unsigned num1;
-	unsigned num2;
-	unsigned ans;
-	int score;
+	int num1, num2, ans, n;
+	int score = 0;
 
 	unsigned start;
 	unsigned end;
-	int n;
 
 	char buf[4];
 
@@ -35,7 +32,7 @@ int main() {
 
 		if (atoi(buf) == ans) {
 			printf("correct\n");
-			score = += 1;
+			score += 1;
 		}
 
 		else {
@@ -48,7 +45,9 @@ int main() {
 	end = time();
 	unsigned playing = (end - start) / 1000;
 	int final = (playing > 20) ? score - (playing - 20) : score + (20 - playing);
-	printf("You took %d.%d seconds\n",(end - start)/1000, ((end - start) % 1000) / 100));
+	printf("You took %d.%d seconds\n",(end - start)/1000, ((end - start) % 1000) / 100);
 	printf("Your final score is %d\n",final);
 
+
+	return 0;
 }

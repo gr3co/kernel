@@ -21,4 +21,7 @@ int atoi(const char* str) __attribute__((const, nonnull));
 long strtol(const char* p, char** out_p, int base) __attribute__((const, nonnull));
 unsigned long strtoul(const char* p, char** out_p, int base) __attribute__((const, nonnull));
 
+int rand(void);
+void srand(unsigned new_seed);
+
 #endif /* STDLIB_H */
