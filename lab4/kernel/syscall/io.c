@@ -17,18 +17,22 @@
 #include <exports.h>
 #include <kernel.h>
 
-#define EOT_CHAR 0x04
-#define DEL_CHAR 0x7f
+#define SFROM_START 0x00000000
+#define SFROM_END 0x00ffffff
+#define SDRAM_START 0xa0000000
+#define SDRAM_END 0xa3ffffff
+
+extern 
 
 
 /* Read count bytes (or less) from fd into the buffer buf. */
 ssize_t read_syscall(int fd, void *buf, size_t count)
 {
 	// Check for invalid memory range or file descriptors
-    if (check_mem((char *) buf, (int) count, SDRAM_START, SDRAM_END) == FALSE) {
-        exit_handler(-EFAULT);
+    if (valid_addr((char *) buf, (int) count, SDRAM_START, SDRAM_END) == FALSE) {
+        return -EFAULT;
     } else if (fd != STDIN_FILENO) {
-        exit_handler(-EBADF);
+        return -EBADF;
     }
 
     unsigned i = 0;
@@ -65,11 +69,11 @@ ssize_t read_syscall(int fd, void *buf, size_t count)
 ssize_t write_syscall(int fd, const void *buf, size_t count)
 {
 	// Check for invalid memory range or file descriptors
-    if (check_mem((char *) buf, (int) count, SDRAM_START, SDRAM_END) == FALSE &&
-        check_mem((char *) buf, (int) count, SFROM_START, SFROM_END) == FALSE) {
-        exit_handler(-EFAULT);
+    if (valid_addr((char *) buf, (int) count, SDRAM_START, SDRAM_END) == FALSE &&
+        valid_addr((char *) buf, (int) count, SFROM_START, SFROM_END) == FALSE) {
+        return -EFAULT;
     } else if (fd != STDOUT_FILENO) {
-        exit_handler(-EBADF);
+       	return -EBADF;
     }
 
     char *buffer = (char *) buf;

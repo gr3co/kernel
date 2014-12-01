@@ -1,7 +1,11 @@
-#include <interrupt.h>
-#include <reg.h>
+#include <arm/interrupt.h>
+#include <arm/reg.h>
+#include <arm/timer.h>
+#include "handler.h"
 
 #define CLOCK_TO_10_MILLI OSTMR_FREQ / 100
+
+extern volatile unsigned current_time;
 
 /* IRQ_Handler updates system time whenever OS timer match 0 IRQ is serviced */
 void irq_handler() {

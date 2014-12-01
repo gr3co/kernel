@@ -12,7 +12,7 @@
 
 #include <asm.h>
 #include <arm/psr.h>
-#include <interrupt.h>
+#include <arm/interrupt.h>
 
 	.extern global_data
     .extern irq_handler
