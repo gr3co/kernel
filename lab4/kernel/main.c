@@ -102,7 +102,9 @@ int* wire_in (int vector, int swi_true) {
     return handler_addr;
 }
 
-int kmain(int argc __attribute__((unused)), char** argv  __attribute__((unused)), uint32_t table)
+int kmain(int argc __attribute__((unused)), 
+    char** argv __attribute__((unused)), 
+    uint32_t table)
 {
 
 	app_startup();
@@ -137,7 +139,7 @@ int kmain(int argc __attribute__((unused)), char** argv  __attribute__((unused))
 }
 
 /* C_SWI_Handler uses SWI number to call the appropriate function. */
-/*int C_SWI_Handler(int swi_num, int *regs) {
+int C_SWI_Handler(int swi_num, int *regs) {
     int count = 0;
     switch (swi_num) {
         // ssize_t read(int fd, void *buf, size_t count);
@@ -166,4 +168,4 @@ int kmain(int argc __attribute__((unused)), char** argv  __attribute__((unused))
     }
 
     return count;
-}*/
+}
