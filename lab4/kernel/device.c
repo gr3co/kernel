@@ -16,6 +16,8 @@
 #include <arm/psr.h>
 #include <arm/exception.h>
 
+#define NULL 0
+
 /**
  * @brief Fake device maintainence structure.
  * Since our tasks are periodic, we can represent 
@@ -45,8 +47,13 @@ static dev_t devices[NUM_DEVICES];
  */
 void dev_init(void)
 {
-   /* the following line is to get rid of the warning and should not be needed */	
-   devices[0]=devices[0];
+	int i;
+   	for (i = 0; i < NUM_DEVICES; i++) {
+   		dev_t new_device;
+   		new_device.sleep_queue = NULL;
+   		new_device.next_match = dev_freq[i];
+   		devices[i] = new_device;
+   	}
 }
 
 
@@ -56,9 +63,34 @@ void dev_init(void)
  *
  * @param dev  Device number.
  */
-void dev_wait(unsigned int dev __attribute__((unused)))
+void dev_wait(unsigned int dev)
 {
-	
+	if (dev >= NUM_DEVICES) {
+		printf("Awwww you done fucked up\n");
+		return;
+	}
+	tcb_t *sleep_task = devices[dev].sleep_queue;
+
+	// find the current running task
+	uint8_t highest_priority = highest_prio();
+	tcb_t *current_task = runqueue_remove(highest_priority);
+
+	// edge case: if the current task would be highest priority for 
+	// this device, just add it to the front of the queue
+	if (sleep_task == NULL || sleep_task->cur_prio > highest_priority) {
+		devices[dev].sleep_queue = current_task;
+		current_task->sleep_queue = sleep_task;
+	} else {
+		// look for where the current task would fit into the queue
+		while (sleep_task->sleep_queue != NULL 
+			&& sleep_task->sleep_queue->cur_prio < highest_priority) {
+			sleep_task = sleep_task->sleep_queue;
+		}
+		// and insert the task
+		tcb_t *next = sleep_task->sleep_queue;
+		sleep_task->sleep_queue = current_task;
+		current_task->sleep_queue = next;
+	}
 }
 
 
@@ -69,8 +101,24 @@ void dev_wait(unsigned int dev __attribute__((unused)))
  * interrupt corresponded to the interrupt frequency of a device, this 
  * function should ensure that the task is made ready to run 
  */
-void dev_update(unsigned long millis __attribute__((unused)))
+void dev_update(unsigned long millis)
 {
-	
+	int i;
+	for (i = 0; i < NUM_DEVICES; i++) {
+		// if it's time to check this device
+		if (devices[i].next_match <= millis) {
+			// add all of the devices tasks to the runqueue
+			tcb_t *task = devices[i].sleep_queue;
+			while (task != NULL) {
+				runqueue_add(task, task->cur_prio);
+				tcb_t *next = task->sleep_queue;
+				task->sleep_queue = NULL;
+				task = next;
+			}
+			devices[i].sleep_queue = NULL;
+			// reset the next match
+			devices[i].next_match += dev_freq[i];
+		}
+	}	
 }
 
