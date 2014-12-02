@@ -72,18 +72,18 @@ void dev_wait(unsigned int dev)
 	tcb_t *sleep_task = devices[dev].sleep_queue;
 
 	// find the current running task
-	uint8_t highest_priority = highest_prio();
-	tcb_t *current_task = runqueue_remove(highest_priority);
+	uint8_t current_priority = get_cur_prio();
+	tcb_t *current_task = runqueue_remove(current_priority);
 
 	// edge case: if the current task would be highest priority for 
 	// this device, just add it to the front of the queue
-	if (sleep_task == NULL || sleep_task->cur_prio > highest_priority) {
+	if (sleep_task == NULL || sleep_task->cur_prio > current_priority) {
 		devices[dev].sleep_queue = current_task;
 		current_task->sleep_queue = sleep_task;
 	} else {
 		// look for where the current task would fit into the queue
 		while (sleep_task->sleep_queue != NULL 
-			&& sleep_task->sleep_queue->cur_prio < highest_priority) {
+			&& sleep_task->sleep_queue->cur_prio < current_priority) {
 			sleep_task = sleep_task->sleep_queue;
 		}
 		// and insert the task
