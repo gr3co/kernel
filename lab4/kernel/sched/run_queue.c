@@ -8,31 +8,34 @@
 
 #include <types.h>
 #include <assert.h>
+#include <task.h>
 
 #include <kernel.h>
 #include <sched.h>
 #include "sched_i.h"
+#include <exports.h>
 
+//create runq queue data structure
+//tcb_t * run_queue[OS_MAX_TASKS]; 
 
-
-static tcb_t* run_list[OS_MAX_TASKS]  __attribute__((unused));
+static tcb_t* run_list[OS_MAX_TASKS]  /*__attribute__((unused))*/;
 
 /* A high bit in this bitmap means that the task whose priority is
  * equal to the bit number of the high bit is runnable.
  */
-static uint8_t run_bits[OS_MAX_TASKS/8] __attribute__((unused));
+static uint8_t run_bits[OS_MAX_TASKS/8] /*__attribute__((unused))*/;
 
 /* This is a trie structure.  Tasks are grouped in groups of 8.  If any task
  * in a particular group is runnable, the corresponding group flag is set.
  * Since we can only have 64 possible tasks, a single byte can represent the
  * run bits of all 8 groups.
  */
-static uint8_t group_run_bits __attribute__((unused));
+static uint8_t group_run_bits /*__attribute__((unused))*/;
 
 /* This unmap table finds the bit position of the lowest bit in a given byte
  * Useful for doing reverse lookup.
  */
-static uint8_t prio_unmap_table[]  __attribute__((unused)) =
+static uint8_t prio_unmap_table[]  /*__attribute__((unused))*/ =
 {
 
 0, 0, 1, 0, 2, 0, 1, 0, 3, 0, 1, 0, 2, 0, 1, 0,
@@ -58,7 +61,11 @@ static uint8_t prio_unmap_table[]  __attribute__((unused)) =
  */
 void runqueue_init(void)
 {
-	
+	int i = 0;
+	for (;i < OS_MAX_TASKS;i++) run_list[i] = NULL;
+	i = 0;
+	group_run_bits = 0;
+	for (;i < OS_MAX_TASKS/8;i++) run_bits[i] = 0;
 }
 
 /**
@@ -69,9 +76,15 @@ void runqueue_init(void)
  * only requirement is that the run queue for that priority is empty.  This
  * function needs to be externally synchronized.
  */
-void runqueue_add(tcb_t* tcb  __attribute__((unused)), uint8_t prio  __attribute__((unused)))
+void runqueue_add(tcb_t* tcb  /*__attribute__((unused))*/, uint8_t prio  /*__attribute__((unused))*/)
 {
-	
+	//tcb_t * new = run_list[prio];
+	if (run_list[prio] != NULL) {
+		printf("not adding task to runqueue since we already have a task of that priority\n");
+		return;
+	}
+
+	run_list[prio] = tcb;
 }
 
 
@@ -82,9 +95,11 @@ void runqueue_add(tcb_t* tcb  __attribute__((unused)), uint8_t prio  __attribute
  *
  * This function needs to be externally synchronized.
  */
-tcb_t* runqueue_remove(uint8_t prio  __attribute__((unused)))
+tcb_t* runqueue_remove(uint8_t prio  /*__attribute__((unused))*/)
 {
-	return (tcb_t *)1; // fix this; dummy return to prevent warning messages	
+	tcb_t * new = run_list[prio];
+	run_list[prio] = NULL;
+	return new; 	
 }
 
 /**
@@ -93,5 +108,8 @@ tcb_t* runqueue_remove(uint8_t prio  __attribute__((unused)))
  */
 uint8_t highest_prio(void)
 {
-	return 1; // fix this; dummy return to prevent warning messages	
+	int y, x;
+	y = prio_unmap_table[group_run_bits];
+	x = prio_unmap_table[run_bits[y]]
+	return (y << 3) + x;	
 }

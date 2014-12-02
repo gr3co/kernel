@@ -14,4 +14,8 @@ FUNC(_start)
 	ldr r0, [sp]   @ give argc
     add r1, sp, #4 @ give argv
     bl main
-    sub pc, pc, #-8
+
+loop:
+	mov r0, #0
+	mov r0, #0
+    b loop

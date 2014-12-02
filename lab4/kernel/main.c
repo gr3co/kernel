@@ -56,7 +56,10 @@ uint32_t global_data;
 
 extern void irq_wrapper(void);
 extern int swi_handler(int);
-extern void irq_enable(void);
+//extern void irq_enable(void);
+
+
+//set up lab4 data structures
 
 /* Checks the Vector Table at vector for an appropriate address. */
 bool_e check_vector(int* vector) {
@@ -128,13 +131,13 @@ int kmain(int argc __attribute__((unused)), char** argv  __attribute__((unused))
     // put 10 millis + current time in OSMR
     reg_write(OSTMR_OSMR_ADDR(0), (unsigned)CLOCK_TO_10_MILLI);
     //enable IRQ's
-    irq_enable();
+    enable_interrupts();
 		
 	assert(0);        /* should never get here */
 }
 
 /* C_SWI_Handler uses SWI number to call the appropriate function. */
-int C_SWI_Handler(int swi_num, int *regs) {
+/*int C_SWI_Handler(int swi_num, int *regs) {
     int count = 0;
     switch (swi_num) {
         // ssize_t read(int fd, void *buf, size_t count);
@@ -163,4 +166,4 @@ int C_SWI_Handler(int swi_num, int *regs) {
     }
 
     return count;
-}
+}*/
