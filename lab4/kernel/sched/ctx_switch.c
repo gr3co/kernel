@@ -13,7 +13,7 @@
 #include <config.h>
 #include <kernel.h>
 #include "sched_i.h"
-
+#include <sched.h>
 #ifdef DEBUG_MUTEX
 #include <exports.h>
 #endif
@@ -42,7 +42,8 @@ void dispatch_init(tcb_t* idle __attribute__((unused)))
  */
 void dispatch_save(void)
 {
-	
+	uint8_t highest = highest_prio();
+	ctx_switch_full(&system_tcb[highest].context,&cur_tcb->context);
 }
 
 /**

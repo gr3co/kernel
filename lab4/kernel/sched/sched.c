@@ -12,6 +12,7 @@
 #include <kernel.h>
 #include <config.h>
 #include "sched_i.h"
+#include <include/string.h>
 
 #include <arm/reg.h>
 #include <arm/psr.h>
@@ -52,8 +53,9 @@ static void create_tcb(task_t task, uint8_t priority) {
 	result.cur_prio = priority;
 	result.context = context;
 
-	// add it to the runqueue
+	// add it to the runqueue and the system tcb list (the indices should always match), runlist is for redundancacy
 	runqueue_add(&result, priority);
+	system_tcb[priority] = result;
 
 }
 
@@ -83,7 +85,9 @@ void allocate_tasks(task_t** tasks, size_t num_tasks)
 	
 	unsigned i;
 	for (i = 0; i < num_tasks; i++) {
-		create_tcb(tasks[i][0], i);
+		create_tcb(tasks[0][i], i);
 	}
+
+	dispatch_nosave();
 }
 
