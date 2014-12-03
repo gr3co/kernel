@@ -1,6 +1,7 @@
 #include <arm/interrupt.h>
 #include <arm/reg.h>
 #include <arm/timer.h>
+#include <device.h>
 #include "handler.h"
 
 #define CLOCK_TO_10_MILLI OSTMR_FREQ / 100
@@ -21,6 +22,8 @@ void irq_handler() {
         // call again in 10 millis
         unsigned new_time = (unsigned)CLOCK_TO_10_MILLI + reg_read(OSTMR_OSCR_ADDR);
         reg_write(OSTMR_OSMR_ADDR(0), new_time);
+
+        dev_update(current_time);
     }
 
 }

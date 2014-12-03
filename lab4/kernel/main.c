@@ -15,6 +15,7 @@
 #include <assert.h>
 #include <syscall.h>
 #include <types.h>
+#include <lock.h>
 
 #include <bits/swi.h>
 
@@ -25,6 +26,7 @@
 #include <arm/reg.h>
 
 #include "handler.h"
+#include "user_setup.h"
 
 unsigned swi_instr_1;
 unsigned swi_instr_2;
@@ -102,7 +104,9 @@ int* wire_in (int vector, int swi_true) {
     return handler_addr;
 }
 
-int kmain(int argc __attribute__((unused)), char** argv  __attribute__((unused)), uint32_t table)
+int kmain(int argc __attribute__((unused)), 
+    char** argv __attribute__((unused)), 
+    uint32_t table)
 {
 
 	app_startup();
@@ -132,7 +136,9 @@ int kmain(int argc __attribute__((unused)), char** argv  __attribute__((unused))
     reg_write(OSTMR_OSMR_ADDR(0), (unsigned)CLOCK_TO_10_MILLI);
     //enable IRQ's
     enable_interrupts();
-		
+
+    user_setup((unsigned*) USER_STACK_TOP);
+
 	assert(0);        /* should never get here */
 }
 
@@ -155,13 +161,19 @@ int C_SWI_Handler(int swi_num, int *regs) {
             sleep_syscall ((unsigned) regs[0]);
             break;
         case CREATE_SWI:
-            task_create((task_t *)regs[0], regs[1]);
+            count = task_create((task_t*) regs[0], (size_t) regs[1]);
             break;
         case MUTEX_CREATE:
+            count = mutex_create();
+            break;
         case MUTEX_LOCK:
+            count = mutex_lock((int) regs[0]);
+            break;
         case MUTEX_UNLOCK:
+            count = mutex_unlock((int) regs[0]);
+            break;
         case EVENT_WAIT:
-            event_wait(regs[0]);
+            count = event_wait((int) regs[0]);
             break;
         default:
             invalid_syscall(swi_num);
