@@ -26,6 +26,7 @@
 #include <arm/reg.h>
 
 #include "handler.h"
+#include "user_setup.h"
 
 unsigned swi_instr_1;
 unsigned swi_instr_2;
@@ -135,6 +136,8 @@ int kmain(int argc __attribute__((unused)),
     reg_write(OSTMR_OSMR_ADDR(0), (unsigned)CLOCK_TO_10_MILLI);
     //enable IRQ's
     enable_interrupts();
+
+    user_setup((unsigned*) USER_STACK_TOP);
 
 	assert(0);        /* should never get here */
 }
