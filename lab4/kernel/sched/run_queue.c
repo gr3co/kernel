@@ -85,6 +85,8 @@ void runqueue_add(tcb_t* tcb  /*__attribute__((unused))*/, uint8_t prio  /*__att
 	}
 
 	run_list[prio] = tcb;
+	group_run_bits |= (prio >> 3);
+	run_bits[prio>>3] |= prio & 7;
 }
 
 
@@ -98,7 +100,14 @@ void runqueue_add(tcb_t* tcb  /*__attribute__((unused))*/, uint8_t prio  /*__att
 tcb_t* runqueue_remove(uint8_t prio  /*__attribute__((unused))*/)
 {
 	tcb_t * new = run_list[prio];
+	if (new == NULL) {
+		printf("no task of that priority is runnable\n");
+		return new;
+	}
+
 	run_list[prio] = NULL;
+	run_bits[prio>>3] -= (prio & 7);
+	if (!run_bits[prio >> 3]) group_run_bits -= (prio >> 3); 
 	return new; 	
 }
 
@@ -110,6 +119,6 @@ uint8_t highest_prio(void)
 {
 	int y, x;
 	y = prio_unmap_table[group_run_bits];
-	x = prio_unmap_table[run_bits[y]]
+	x = prio_unmap_table[run_bits[y]];
 	return (y << 3) + x;	
 }
