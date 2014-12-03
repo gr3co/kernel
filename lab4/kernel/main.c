@@ -15,6 +15,7 @@
 #include <assert.h>
 #include <syscall.h>
 #include <types.h>
+#include <lock.h>
 
 #include <bits/swi.h>
 
@@ -134,7 +135,7 @@ int kmain(int argc __attribute__((unused)),
     reg_write(OSTMR_OSMR_ADDR(0), (unsigned)CLOCK_TO_10_MILLI);
     //enable IRQ's
     enable_interrupts();
-		
+
 	assert(0);        /* should never get here */
 }
 
@@ -157,10 +158,19 @@ int C_SWI_Handler(int swi_num, int *regs) {
             sleep_syscall ((unsigned) regs[0]);
             break;
         case CREATE_SWI:
+            count = task_create((task_t*) regs[0], (size_t) regs[1]);
+            break;
         case MUTEX_CREATE:
+            count = mutex_create();
+            break;
         case MUTEX_LOCK:
+            count = mutex_lock((int) regs[0]);
+            break;
         case MUTEX_UNLOCK:
+            count = mutex_unlock((int) regs[0]);
+            break;
         case EVENT_WAIT:
+            count = event_wait((int) regs[0]);
             break;
         default:
             invalid_syscall(swi_num);
