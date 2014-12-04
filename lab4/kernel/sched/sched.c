@@ -39,8 +39,6 @@ static void idle(void* ptr __attribute__((unused)))
 
 static void create_tcb(task_t task, uint8_t priority) {
 	
-	tcb_t result;
-	
 	// set up the context
 	sched_context_t context;
 	context.sp = (void*)task.stack_pos;
@@ -48,13 +46,12 @@ static void create_tcb(task_t task, uint8_t priority) {
 	context.r5 = (uint32_t)task.data;
 
 	// set up the tcb
-	result.native_prio = priority;
-	result.cur_prio = priority;
-	result.context = context;
+	system_tcb[priority].native_prio = priority;
+	system_tcb[priority].cur_prio = priority;
+	system_tcb[priority].context = context;
 
 	// add it to the runqueue and the system tcb list (the indices should always match), runlist is for redundancacy
-	runqueue_add(&result, priority);
-	system_tcb[priority] = result;
+	runqueue_add(&system_tcb[priority], priority);
 
 }
 
