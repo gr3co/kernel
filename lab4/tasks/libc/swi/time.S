@@ -7,8 +7,10 @@
  */
 
 #include <asm.h>
+#include <bits/swi.h>
 
 	.file "time.S"
 
 FUNC(time)
-	@ Add code here.  Put your name at the top.
+	swi TIME_SWI @make the system call
+	mov pc,lr

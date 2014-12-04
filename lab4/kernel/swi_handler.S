@@ -17,8 +17,8 @@
 swi_handler:
 
     sub     sp, sp, #4
-    stmfd   sp, {r0-r12, lr}^
-    add     sp, sp, #-14*4
+    stmfd   sp!, {r0-r12, lr}
+    @add     sp, sp, #-14*4
 
     ldr r8, =global_data
     ldr r8, [r8]
@@ -49,8 +49,8 @@ swi_handler:
 
     @ Discard the r0 on the stack (r0 has ret value).
     add     sp, sp, #4
-    ldmfd   sp, {r1-r12, lr}^
-    add     sp, sp, #14*4
+    ldmfd   sp!, {r1-r12, lr}
+    @add     sp, sp, #14*4
 
     @ remove space used to store spsr
     add     sp, sp, #4

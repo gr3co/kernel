@@ -24,6 +24,9 @@
 
 int task_create(task_t* tasks, size_t num_tasks)
 {
+
+	disable_interrupts();
+
 	unsigned int i = 0, j=0;
 	//unsigned long t[num_tasks];
 	//task_t * sorted_task[num_tasks];
