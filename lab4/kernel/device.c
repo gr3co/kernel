@@ -91,6 +91,8 @@ void dev_wait(unsigned int dev)
 		sleep_task->sleep_queue = current_task;
 		current_task->sleep_queue = next;
 	}
+
+	dispatch_sleep();
 }
 
 
@@ -119,6 +121,8 @@ void dev_update(unsigned long millis)
 			// reset the next match
 			devices[i].next_match += dev_freq[i];
 		}
-	}	
+	}
+    dispatch_save();
+
 }
 

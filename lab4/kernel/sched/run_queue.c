@@ -91,22 +91,10 @@ void runqueue_add(tcb_t* tcb, uint8_t prio)
 	}
 
 	run_list[prio] = tcb;
-	group_run_bits |= (prio >> 3);
-	run_bits[prio>>3] |= prio & 7;
+	group_run_bits |= (1 << (prio >> 3));
+	run_bits[prio>>3] |= (1 << (prio & 7));
 }
 
-
-void print_run_list() {
-	int i;
-	for (i = 0; i < OS_MAX_TASKS; i++) {
-		if (run_list[i] == NULL) {
-			printf("N,");
-		} else {
-			printf("Y,");
-		}
-	}
-	printf("\n");
-}
 
 /**
  * @brief Empty the run queue of the given priority.
@@ -120,8 +108,6 @@ tcb_t* runqueue_remove(uint8_t prio)
 
 	disable_interrupts();
 
-	print_run_list();
-
 	tcb_t * new = run_list[prio];
 	if (new == NULL) {
 		printf("no task of that priority is runnable\n");
@@ -129,8 +115,8 @@ tcb_t* runqueue_remove(uint8_t prio)
 	}
 
 	run_list[prio] = NULL;
-	run_bits[prio>>3] -= (prio & 7);
-	if (!run_bits[prio >> 3]) group_run_bits -= (prio >> 3); 
+	run_bits[prio>>3] -= (1 << (prio & 7));
+	if (!run_bits[prio >> 3]) group_run_bits -= (1 << (prio >> 3)); 
 	return new; 	
 }
 

@@ -28,7 +28,6 @@ void irq_handler() {
 
         if (task_created) {
             dev_update(current_time);
-            dispatch_save();
         }
     }
 

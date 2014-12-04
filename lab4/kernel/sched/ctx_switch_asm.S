@@ -42,7 +42,12 @@ FUNC(launch_task)
 /* add your code to perform a full context switch */
 FUNC(ctx_switch_full)
 	stmia	r1, {r4-r11,sp,lr}^
-	ldmia	r0, {r4-r11,sp,lr}^
+	@ldr		r2, =need_to_initialize
+	@ldr		r2, [r2]
+	@cmp 	r2, #1
+	@beq		ctx_switch_half
+	@ldmia	r0, {r4-r11,sp,lr}^
+	msr     cpsr_c, #(PSR_MODE_USR)
 	mov		pc,lr
 
 /*add your code to perform a half context switch */	
