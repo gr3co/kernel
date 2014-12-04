@@ -42,7 +42,7 @@ int mutex_create(void)
 {
 	if (next_mutex_available >= OS_NUM_MUTEX) {
 		printf("No mutexes remaining\n");
-		return;
+		return -ENOMEM;
 	}
 	gtMutex[next_mutex_available++].bAvailable = TRUE;
 }
