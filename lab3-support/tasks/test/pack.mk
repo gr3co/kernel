@@ -1,0 +1,6 @@
+PROGS_TEST_OBJS := test.o
+PROGS_TEST_OBJS := $(PROGS_TEST_OBJS:%=$(TDIR)/test/%)
+ALL_OBJS += $(PROGS_TEST_OBJS)
+
+$(TDIR)/bin/test : $(TSTART) $(PROGS_TEST_OBJS) $(TLIBC)
+
