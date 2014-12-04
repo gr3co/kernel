@@ -1,0 +1,51 @@
+
+defined in lock.h
+struct mutex
+{
+	bool_e	bAvailable;		/* flag for availability */
+	tcb_t*	pHolding_Tcb;	/* who are using this mutex */
+	bool_e	bLock;			/* 1 for lock/0 for unlock */	
+	tcb_t*	pSleep_queue;	/* list of applications waiting for this mutex */
+};
+typedef struct mutex mutex_t;
+
+defined n task.h
+struct task
+{
+	task_fun_t    lambda;      /**< The root function of this task */
+	void*         data;        /**< Argument to the root function */
+	void*         stack_pos;   /**< The starting position of the task's sp */
+	unsigned long C;           /**< The worst-case computation time */
+	unsigned long T;           /**< The task's period */
+};
+
+struct sched_context
+{
+	uint32_t r4;
+	uint32_t r5;
+	uint32_t r6;
+	uint32_t r7;
+	uint32_t r8;
+	uint32_t r9;
+	uint32_t r10;
+	uint32_t r11;
+	void*    sp;
+	void*    lr;
+};
+
+struct tcb
+{
+	uint8_t          native_prio;        /**< The native priority of the task without escalation */
+	uint8_t          cur_prio;           /**< The current priority of the task after priority inheritance */
+	sched_context_t  context;            /**< The task's serialized context -- if not running */
+	int              holds_lock;         /**< 1 if the task is currently owning a lock */
+	volatile struct tcb* sleep_queue;    /**< If this task is asleep, this is its sleep queue link */
+	/** Embed the kernel stack here -- AAPCS wants 8 byte alignment */
+	uint32_t         kstack[OS_KSTACK_SIZE/sizeof(uint32_t)] 
+	                     __attribute__((aligned(8)));
+	uint32_t         kstack_high[0];
+};
+
+defined in exception.h
+INLINE void enable_interrupts(void)
+INLINE void disable_interrupts(void)
