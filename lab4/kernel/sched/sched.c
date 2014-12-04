@@ -45,6 +45,8 @@ static void create_tcb(task_t task, uint8_t priority) {
 	context.lr = (void*)task.lambda;
 	context.r5 = (uint32_t)task.data;
 
+	printf("<%p, %p>\n", context.lr, context.sp);
+
 	// set up the tcb
 	system_tcb[priority].native_prio = priority;
 	system_tcb[priority].cur_prio = priority;

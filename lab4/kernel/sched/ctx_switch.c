@@ -20,6 +20,8 @@
 #endif
 
 static tcb_t* cur_tcb; /* use this if needed */
+void* tcb_kernel_stack;
+
 
 /**
  * @brief Initialize the current TCB and priority.

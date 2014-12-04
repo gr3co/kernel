@@ -41,14 +41,21 @@ FUNC(launch_task)
 /* r0 points to the target context, r1 to the current context. */
 /* add your code to perform a full context switch */
 FUNC(ctx_switch_full)
-	stmfa	r1, {r4-r11,sp,lr}^
-	ldmfa	r0, {r4-r11,sp,lr}^
+	stmia	r1, {r4-r11,sp,lr}^
+	@ldr		r2, =need_to_initialize
+	@ldr		r2, [r2]
+	@cmp 	r2, #1
+	@beq		ctx_switch_half
+	@ldmia	r0, {r4-r11,sp,lr}^
+	msr     cpsr_c, #(PSR_MODE_USR)
 	mov		pc,lr
 
 /*add your code to perform a half context switch */	
 FUNC(ctx_switch_half)
-	ldmfa	r0, {r4-r11,sp,lr}^
-	mov		r4, lr
+	ldmia	r0, {r4-r11}
+	add		r0, r0, #32
+	ldmia	r0, {r1,r2}
+	mov		r4, r2
 	/* r5 is already the data */
-	mov 	r6, sp
+	mov 	r6, r1
 	b       launch_task

@@ -109,7 +109,6 @@ int kmain(int argc __attribute__((unused)),
     char** argv __attribute__((unused)), 
     uint32_t table)
 {
-
 	app_startup();
 	global_data = table;
 	
@@ -165,7 +164,7 @@ int C_SWI_Handler(int swi_num, int *regs) {
             sleep_syscall ((unsigned) regs[0]);
             break;
         case CREATE_SWI:
-            count = task_create((task_t*) regs[0], (size_t) regs[1]);
+            count = kernel_task_create((task_t*) regs[0], (size_t) regs[1]);
             break;
         case MUTEX_CREATE:
             count = mutex_create();
@@ -177,7 +176,7 @@ int C_SWI_Handler(int swi_num, int *regs) {
             count = mutex_unlock((int) regs[0]);
             break;
         case EVENT_WAIT:
-            count = event_wait((int) regs[0]);
+            count = kernel_event_wait((int) regs[0]);
             break;
         default:
             invalid_syscall(swi_num);

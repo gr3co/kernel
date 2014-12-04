@@ -91,8 +91,8 @@ void runqueue_add(tcb_t* tcb, uint8_t prio)
 	}
 
 	run_list[prio] = tcb;
-	group_run_bits |= (prio >> 3);
-	run_bits[prio>>3] |= prio & 7;
+	group_run_bits |= (1 << (prio >> 3));
+	run_bits[prio>>3] |= (1 << (prio & 7));
 }
 
 
@@ -115,8 +115,8 @@ tcb_t* runqueue_remove(uint8_t prio)
 	}
 
 	run_list[prio] = NULL;
-	run_bits[prio>>3] -= (prio & 7);
-	if (!run_bits[prio >> 3]) group_run_bits -= (prio >> 3); 
+	run_bits[prio>>3] -= (1 << (prio & 7));
+	if (!run_bits[prio >> 3]) group_run_bits -= (1 << (prio >> 3)); 
 	return new; 	
 }
 

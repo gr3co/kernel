@@ -22,7 +22,7 @@
 #include <arm/physmem.h>
 #include <device.h>
 
-int task_create(task_t* tasks, size_t num_tasks)
+int kernel_task_create(task_t* tasks, size_t num_tasks)
 {
 
 	disable_interrupts();
@@ -72,7 +72,7 @@ int task_create(task_t* tasks, size_t num_tasks)
   	return -1;
 }
 
-int event_wait(unsigned int dev)
+int kernel_event_wait(unsigned int dev)
 {
 	if (dev >= 4) {
 		printf("invalid device number\n");

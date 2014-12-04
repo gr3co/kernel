@@ -73,7 +73,7 @@ void dev_wait(unsigned int dev)
 
 	// find the current running task
 	uint8_t current_priority = get_cur_prio();
-	tcb_t *current_task = runqueue_remove(current_priority);
+	tcb_t *current_task = get_cur_tcb();
 
 	// edge case: if the current task would be highest priority for 
 	// this device, just add it to the front of the queue
@@ -91,6 +91,8 @@ void dev_wait(unsigned int dev)
 		sleep_task->sleep_queue = current_task;
 		current_task->sleep_queue = next;
 	}
+
+	dispatch_sleep();
 }
 
 
@@ -119,6 +121,8 @@ void dev_update(unsigned long millis)
 			// reset the next match
 			devices[i].next_match += dev_freq[i];
 		}
-	}	
+	}
+    dispatch_save();
+
 }
 
