@@ -43,7 +43,9 @@ void dispatch_init(tcb_t* idle __attribute__((unused)))
 void dispatch_save(void)
 {
 	uint8_t highest = highest_prio();
-	ctx_switch_full(&system_tcb[highest].context,&cur_tcb->context);
+	tcb_t* old = cur_tcb;
+	cur_tcb = &system_tcb[highest];
+	ctx_switch_full(&cur_tcb->context, &old->context);
 }
 
 /**
@@ -54,7 +56,9 @@ void dispatch_save(void)
  */
 void dispatch_nosave(void)
 {
-
+	uint8_t highest = highest_prio();
+	cur_tcb = &system_tcb[highest];
+	ctx_switch_half(&cur_tcb->context);
 }
 
 
@@ -66,7 +70,11 @@ void dispatch_nosave(void)
  */
 void dispatch_sleep(void)
 {
-	
+	uint8_t priority = get_cur_prio();
+	tcb_t *removed = runqueue_remove(priority);
+	uint8_t highest = highest_prio();
+	cur_tcb = &system_tcb[highest];
+	ctx_switch_full(&cur_tcb->context, &removed->context);
 }
 
 /**

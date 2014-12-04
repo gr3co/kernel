@@ -12,7 +12,6 @@
 #include <kernel.h>
 #include <config.h>
 #include "sched_i.h"
-#include <include/string.h>
 
 #include <arm/reg.h>
 #include <arm/psr.h>
