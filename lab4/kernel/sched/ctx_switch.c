@@ -14,6 +14,7 @@
 #include <kernel.h>
 #include "sched_i.h"
 #include <sched.h>
+#include <arm/exception.h>
 #ifdef DEBUG_MUTEX
 #include <exports.h>
 #endif
@@ -45,6 +46,7 @@ void dispatch_save(void)
 	uint8_t highest = highest_prio();
 	tcb_t* old = cur_tcb;
 	cur_tcb = &system_tcb[highest];
+	enable_interrupts();
 	ctx_switch_full(&cur_tcb->context, &old->context);
 }
 
@@ -58,6 +60,7 @@ void dispatch_nosave(void)
 {
 	uint8_t highest = highest_prio();
 	cur_tcb = &system_tcb[highest];
+	enable_interrupts();
 	ctx_switch_half(&cur_tcb->context);
 }
 
@@ -74,6 +77,7 @@ void dispatch_sleep(void)
 	tcb_t *removed = runqueue_remove(priority);
 	uint8_t highest = highest_prio();
 	cur_tcb = &system_tcb[highest];
+	enable_interrupts();
 	ctx_switch_full(&cur_tcb->context, &removed->context);
 }
 

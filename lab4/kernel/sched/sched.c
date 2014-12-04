@@ -84,6 +84,8 @@ void allocate_tasks(task_t** tasks, size_t num_tasks)
 		create_tcb(tasks[0][i], i);
 	}
 
+	enable_interrupts();
+
 	dispatch_nosave();
 }
 

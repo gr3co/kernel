@@ -1,0 +1,6 @@
+PROGS_GAME_OBJS := game.o
+PROGS_GAME_OBJS := $(PROGS_GAME_OBJS:%=$(TDIR)/game/%)
+ALL_OBJS += $(PROGS_GAME_OBJS)
+
+$(TDIR)/bin/game : $(TSTART) $(PROGS_GAME_OBJS) $(TLIBC)
+

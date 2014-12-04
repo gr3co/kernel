@@ -27,7 +27,6 @@ void irq_handler() {
         reg_write(OSTMR_OSMR_ADDR(0), new_time);
 
         if (task_created) {
-            printf("Task was created... \n");
             dev_update(current_time);
             dispatch_save();
         }

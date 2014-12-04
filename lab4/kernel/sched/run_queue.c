@@ -9,6 +9,7 @@
 #include <types.h>
 #include <assert.h>
 #include <task.h>
+#include <arm/exception.h>
 
 #include <kernel.h>
 #include <sched.h>
@@ -80,6 +81,9 @@ void runqueue_init(void)
  */
 void runqueue_add(tcb_t* tcb, uint8_t prio)
 {
+
+	disable_interrupts();
+
 	//tcb_t * new = run_list[prio];
 	if (run_list[prio] != NULL) {
 		printf("not adding task to runqueue since we already have a task of that priority\n");
@@ -101,6 +105,9 @@ void runqueue_add(tcb_t* tcb, uint8_t prio)
  */
 tcb_t* runqueue_remove(uint8_t prio)
 {
+
+	disable_interrupts();
+
 	tcb_t * new = run_list[prio];
 	if (new == NULL) {
 		printf("no task of that priority is runnable\n");

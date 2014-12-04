@@ -179,8 +179,6 @@ int C_SWI_Handler(int swi_num, int *regs) {
         case EVENT_WAIT:
             count = event_wait((int) regs[0]);
             break;
-        case 0x900005:
-            printf("Exit was called\n");
         default:
             invalid_syscall(swi_num);
             break;
