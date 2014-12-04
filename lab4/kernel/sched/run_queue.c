@@ -20,7 +20,7 @@
 //create runq queue data structure
 //tcb_t * run_queue[OS_MAX_TASKS]; 
 
-static tcb_t* run_list[OS_MAX_TASKS];
+static tcb_t* run_list[OS_MAX_TASKS]; //run_list points to elements in system_tcb
 
 /* A high bit in this bitmap means that the task whose priority is
  * equal to the bit number of the high bit is runnable.

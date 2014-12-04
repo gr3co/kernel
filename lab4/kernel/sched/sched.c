@@ -74,7 +74,7 @@ void allocate_tasks(task_t** tasks, size_t num_tasks)
 	
 	task_t idle_task;
 	idle_task.lambda = idle;
-	idle_task.C = 63;
+	idle_task.C = IDLE_PRIO;
 	idle_task.stack_pos = (void*)0xa3000000;
 	idle_task.data = NULL;
 	create_tcb(idle_task, 63);
