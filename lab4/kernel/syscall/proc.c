@@ -61,6 +61,9 @@ int task_create(task_t* tasks, size_t num_tasks)
     	}
   	}
 
+  	// global variable
+  	task_created = 1;
+
   	allocate_tasks(&tasks, num_tasks);
 
   	return -1;

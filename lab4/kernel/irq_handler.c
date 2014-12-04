@@ -2,6 +2,9 @@
 #include <arm/reg.h>
 #include <arm/timer.h>
 #include <device.h>
+#include <kernel.h>
+#include <sched.h>
+#include <exports.h>
 #include "handler.h"
 
 #define CLOCK_TO_10_MILLI OSTMR_FREQ / 100
@@ -23,7 +26,11 @@ void irq_handler() {
         unsigned new_time = (unsigned)CLOCK_TO_10_MILLI + reg_read(OSTMR_OSCR_ADDR);
         reg_write(OSTMR_OSMR_ADDR(0), new_time);
 
-        dev_update(current_time);
+        if (task_created) {
+            printf("Task was created... \n");
+            dev_update(current_time);
+            dispatch_save();
+        }
     }
 
 }

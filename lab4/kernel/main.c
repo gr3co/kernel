@@ -55,6 +55,7 @@ volatile unsigned current_time;
 #define CLOCK_TO_10_MILLI OSTMR_FREQ / 100
 
 uint32_t global_data;
+bool_e task_created;
 
 extern void irq_wrapper(void);
 extern int swi_handler(int);
@@ -137,6 +138,9 @@ int kmain(int argc __attribute__((unused)),
     //enable IRQ's
     enable_interrupts();
 
+    // tasks haven't been created yet
+    task_created = 0;
+
     user_setup((unsigned*) USER_STACK_TOP);
 
 	assert(0);        /* should never get here */
@@ -175,6 +179,8 @@ int C_SWI_Handler(int swi_num, int *regs) {
         case EVENT_WAIT:
             count = event_wait((int) regs[0]);
             break;
+        case 0x900005:
+            printf("Exit was called\n");
         default:
             invalid_syscall(swi_num);
             break;
