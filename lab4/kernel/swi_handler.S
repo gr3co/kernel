@@ -1,7 +1,8 @@
 @ swi_handler.S: SWI Handler
 @
-@ Author: Ramsey Natour <rnatour@andrew.cmu.edu>
-@ Date:   November 10, 2014
+@author Stephen Greco <sgreco@andrew.cmu.edu>
+@author Ramsey Natour <rnatour@andrew.cmu.edu>
+@date   2014-12-4 
 @
 @ Hint: To change the SWI handler in class, we need to accommodate a return
 @   value from the C_SWI_Handler.
