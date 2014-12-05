@@ -6,6 +6,8 @@
 @ Hint: To change the SWI handler in class, we need to accommodate a return
 @   value from the C_SWI_Handler.
 
+#include <arm/psr.h>
+
     .extern C_SWI_Handler
 
     .file   "swi_handler.S"
@@ -33,6 +35,17 @@ swi_handler:
     @ store spsr above gp registers
     str     r2, [sp, #14*4]
 
+    @ recover user register and save
+    mrs      r0, spsr
+    stmfd    sp, {sp, lr}^
+    add      sp, sp, #-8
+
+    @ Enables irqs
+    mrs     r2, cpsr
+    orr     r2, r2, #PSR_FIQ  @ Disables fiqs
+    bic     r2, r2, #PSR_IRQ  @ Enables irqs
+    msr     cpsr, r2
+
     @ Set Param 1: extract SWI and get SWI no. by bit-masking
     ldr     r0, [lr, #-4]
     bic     r0, r0, #0xff000000
@@ -42,6 +55,16 @@ swi_handler:
 
     @ go to handler
     bl      C_SWI_Handler
+
+    @ Disables irqs
+    mrs     r2, cpsr
+    orr     r2, r2, #PSR_FIQ  @ Disables fiqs
+    orr     r2, r2, #PSR_IRQ  @ Disables irqs
+    msr     cpsr, r2
+
+    @ restores user registers
+    ldmfd    sp, {sp, lr}^
+    add      sp, sp, #8
 
     @ restore spsr
     ldr     r2, [sp, #14*4]

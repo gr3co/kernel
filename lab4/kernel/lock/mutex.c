@@ -41,25 +41,26 @@ void mutex_init()
 int mutex_create(void)
 {
 	if (next_mutex_available >= OS_NUM_MUTEX) {
-		printf("No mutexes remaining\n");
+		//printf("No mutexes remaining\n");
 		return -ENOMEM;
 	}
-	gtMutex[next_mutex_available++].bAvailable = TRUE;
+	gtMutex[next_mutex_available].bAvailable = TRUE;
+	return next_mutex_available++;
 }
 
 int mutex_lock(int mutex)
 {
 	if (mutex >= OS_NUM_MUTEX) {
-		printf("Invalid mutex number\n");
+		//printf("Invalid mutex number\n");
 		return -EINVAL;
 	}
 	if (gtMutex[mutex].bAvailable == FALSE) {
-		printf("Mutex unavailable\n");
+		//printf("Mutex unavailable\n");
 		return -EINVAL;
 	}
 	if (gtMutex[mutex].bLock == 1 
 		&& gtMutex[mutex].pHolding_Tcb == get_cur_tcb()) {
-		printf("Mutex already locked by this task\n");
+		//printf("Mutex already locked by this task\n");
 		return -EDEADLOCK;
 	}
 	// Mutex currently available
@@ -77,7 +78,7 @@ int mutex_lock(int mutex)
 		tcb_t *sleep_task = gtMutex[mutex].pSleep_queue;
 		if (sleep_task == NULL || sleep_task->cur_prio > current_priority) {
 			gtMutex[mutex].pSleep_queue = current_task;
-			current_task->pSleep_queue = sleep_task;
+			current_task->sleep_queue = sleep_task;
 		} else {
 			// look for where the current task would fit into the queue
 			while (sleep_task->sleep_queue != NULL 
@@ -90,6 +91,7 @@ int mutex_lock(int mutex)
 			current_task->sleep_queue = next;
 		}
 	}
+	return 0;
 }
 
 int mutex_unlock(int mutex  __attribute__((unused)))
