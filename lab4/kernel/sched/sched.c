@@ -80,7 +80,7 @@ void allocate_tasks(task_t** tasks, size_t num_tasks)
 	runqueue_init();
 		
 	unsigned i;
-	for (i = 0; i < num_tasks - 1; i++) {
+	for (i = 0; i < num_tasks; i++) {
 		create_tcb(tasks[0][i], i);
 	}
 
