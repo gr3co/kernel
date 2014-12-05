@@ -3,7 +3,9 @@
  *
  * @brief Assertion and debugging infrastructure.
  *
- * @author Kartik Subramanian
+ * @author Stephen Greco <sgreco@andrew.cmu.edu>
+ * @author Ramsey Natour <rnatour@andrew.cmu.edu>
+ * @date   2014-12-4 
  */
 
 #ifndef _ASSERT_H_

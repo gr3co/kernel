@@ -1,3 +1,11 @@
+    
+/*  the C irq_handler
+    @author Stephen Greco <sgreco@andrew.cmu.edu>
+    @author Ramsey Natour <rnatour@andrew.cmu.edu>
+    @date   2014-12-4 
+
+ */
+
 #include <arm/interrupt.h>
 #include <arm/reg.h>
 #include <arm/timer.h>

@@ -2,8 +2,9 @@
  *
  * @brief Declares task maintainence structures.
  *
- * @author Kartik Subramanian <ksubrama@andrew.cmu.edu>
- * @date   2008-11-19
+ * @author Stephen Greco <sgreco@andrew.cmu.edu>
+ * @author Ramsey Natour <rnatour@andrew.cmu.edu>
+ * @date   2014-12-4 
  */
 
 #ifndef TASK_H

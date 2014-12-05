@@ -2,10 +2,9 @@
  *
  * @brief kernel main
  *
- * @author 
- *	   
- *	   
- * @date   
+ * @author Stephen Greco <sgreco@andrew.cmu.edu>
+ * @author Ramsey Natour <rnatour@andrew.cmu.edu>
+ * @date   2014-12-4 
  */
  
 #include <kernel.h>

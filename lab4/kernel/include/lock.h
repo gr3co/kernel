@@ -2,13 +2,9 @@
  *
  * @brief Declaration of locking and synchronization primitives.
  *
- * @author Kartik Subramanian <ksubrama@andrew.cmu.edu>
- * @date   2008-12-01
- *
- * @author Junsung Kim <junsungk@cmu.edu>
- *	   Veeren Mandalia <vmandali@andrew.cmu.edu>
- *	   Vikram Gupta <vikramg@andrew.cmu.edu>
- * @date   Sat, 06 Dec 2008 05:15:00 -0400
+ * @author Stephen Greco <sgreco@andrew.cmu.edu>
+ * @author Ramsey Natour <rnatour@andrew.cmu.edu>
+ * @date   2014-12-4 
  */
 
 #include <types.h>

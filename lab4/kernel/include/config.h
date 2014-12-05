@@ -3,8 +3,9 @@
  * @brief A set of common OS configuration flags.  This is to control overall
  * OS behavior and not behavior of a particular modules.
  *
- * @author Kartik Subramanian <ksubrama@andrew.cmu.edu>
- * @date 2008-10-28
+ * @author Stephen Greco <sgreco@andrew.cmu.edu>
+ * @author Ramsey Natour <rnatour@andrew.cmu.edu>
+ * @date   2014-12-4 
  */
 
 #ifndef _CONFIG_H_

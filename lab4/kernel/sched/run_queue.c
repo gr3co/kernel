@@ -2,8 +2,9 @@
  * 
  * @brief Run queue maintainence routines.
  *
- * @author Kartik Subramanian <ksubrama@andrew.cmu.edu>
- * @date 2008-11-21
+ * @author Stephen Greco <sgreco@andrew.cmu.edu>
+ * @author Ramsey Natour <rnatour@andrew.cmu.edu>
+ * @date   2014-12-4 
  */
 
 #include <types.h>
@@ -21,7 +22,7 @@
 //create runq queue data structure
 //tcb_t * run_queue[OS_MAX_TASKS]; 
 
-static tcb_t* run_list[OS_MAX_TASKS];
+static tcb_t* run_list[OS_MAX_TASKS]; //run_list points to elements in system_tcb
 
 /* A high bit in this bitmap means that the task whose priority is
  * equal to the bit number of the high bit is runnable.
