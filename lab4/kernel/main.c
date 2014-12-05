@@ -140,6 +140,8 @@ int kmain(int argc __attribute__((unused)),
     // tasks haven't been created yet
     task_created = 0;
 
+    mutex_init();
+
     user_setup((unsigned*) USER_STACK_TOP);
 
 	assert(0);        /* should never get here */

@@ -30,13 +30,9 @@ void fun1(void* str)
 
 void fun2(void* str)
 {
-	int mutex_num = mutex_create();
 	while(1)
 	{
-		mutex_lock(mutex_num);
 		putchar((int)str);
-		sleep(1000);
-		mutex_unlock(mutex_num);
 		if (event_wait(1) < 0)
 			panic("Dev 1 failed");
 	}
