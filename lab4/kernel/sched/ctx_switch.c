@@ -29,9 +29,9 @@ void* tcb_kernel_stack;
  * Set the initialization thread's priority to IDLE so that anything
  * will preempt it when dispatching the first task.
  */
-void dispatch_init(tcb_t* idle __attribute__((unused)))
+void dispatch_init(tcb_t* idle)
 {
-	// refuse to implement
+	cur_tcb = idle;
 }
 
 
@@ -46,8 +46,17 @@ void dispatch_init(tcb_t* idle __attribute__((unused)))
 void dispatch_save(void)
 {
 	uint8_t highest = highest_prio();
+
+	// don't bother if we're not changing anything
+	if (cur_tcb->cur_prio <= highest)
+    	return;
+
+    tcb_t *next_tcb = runqueue_remove(highest_prio());
+  	runqueue_add(cur_tcb, cur_tcb->cur_prio);
+
 	tcb_t* old = cur_tcb;
-	cur_tcb = &system_tcb[highest];
+	cur_tcb = next_tcb;
+
 	enable_interrupts();
 	ctx_switch_full(&cur_tcb->context, &old->context);
 }
@@ -61,7 +70,7 @@ void dispatch_save(void)
 void dispatch_nosave(void)
 {
 	uint8_t highest = highest_prio();
-	cur_tcb = &system_tcb[highest];
+	cur_tcb = runqueue_remove(highest);
 	enable_interrupts();
 	ctx_switch_half(&cur_tcb->context);
 }
@@ -75,12 +84,17 @@ void dispatch_nosave(void)
  */
 void dispatch_sleep(void)
 {
-	uint8_t priority = get_cur_prio();
-	tcb_t *removed = runqueue_remove(priority);
 	uint8_t highest = highest_prio();
-	cur_tcb = &system_tcb[highest];
+	tcb_t *next = runqueue_remove(highest);
+
+	// we don't want to remove the idle task
+	if (highest == 63)
+    	runqueue_add(next, next->cur_prio);	
+
+	tcb_t* old = cur_tcb;
+	cur_tcb = next;
 	enable_interrupts();
-	ctx_switch_full(&cur_tcb->context, &removed->context);
+	ctx_switch_full(&cur_tcb->context, &old->context);
 }
 
 /**
