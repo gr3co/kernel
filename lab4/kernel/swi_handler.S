@@ -16,6 +16,10 @@
     
 swi_handler:
 
+    @ recover user register and save
+    stmfd    sp, {sp, lr}^
+    add      sp, sp, #-8
+
     sub     sp, sp, #4
     stmfd   sp!, {r0-r12, lr}
     @add     sp, sp, #-14*4
@@ -23,20 +27,16 @@ swi_handler:
     ldr r8, =global_data
     ldr r8, [r8]
 
-    mrs     r2, cpsr
-    bic     r2, r2, #0x080  @ Unmask the IRQ bit.
-    msr     cpsr, r2
-
     @ get spsr into general purpose (gp) registers
     mrs     r2, spsr
 
     @ store spsr above gp registers
     str     r2, [sp, #14*4]
 
-    @ recover user register and save
-    mrs      r0, spsr
-    stmfd    sp, {sp, lr}^
-    add      sp, sp, #-8
+    mrs     r2, cpsr
+    bic     r2, r2, #0x080  @ Unmask the IRQ bit.
+    msr     cpsr, r2
+
 
     @ Set Param 1: extract SWI and get SWI no. by bit-masking
     ldr     r0, [lr, #-4]
@@ -48,9 +48,9 @@ swi_handler:
     @ go to handler
     bl      C_SWI_Handler
 
-    @ restores user registers
-    ldmfd    sp, {sp, lr}^
-    add      sp, sp, #8
+    mrs     r2, cpsr
+    orr     r2, r2, #0x080  @ Unmask the IRQ bit.
+    msr     cpsr, r2
 
     @ restore spsr
     ldr     r2, [sp, #14*4]
@@ -63,4 +63,9 @@ swi_handler:
 
     @ remove space used to store spsr
     add     sp, sp, #4
+
+    @ restores user registers
+    ldmfd    sp, {sp, lr}^
+    add      sp, sp, #8
+
     movs    pc, lr

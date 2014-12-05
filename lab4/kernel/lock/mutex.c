@@ -58,23 +58,25 @@ int mutex_lock(int mutex)
 		//printf("Mutex unavailable\n");
 		return -EINVAL;
 	}
+	tcb_t *current_task = get_cur_tcb();
 	if (gtMutex[mutex].bLock == 1 
-		&& gtMutex[mutex].pHolding_Tcb == get_cur_tcb()) {
+		&& gtMutex[mutex].pHolding_Tcb == current_task) {
 		//printf("Mutex already locked by this task\n");
 		return -EDEADLOCK;
 	}
 	// Mutex currently available
 	if (gtMutex[mutex].bLock == 0) {
 		gtMutex[mutex].bLock = 1;
-		gtMutex[mutex].pHolding_Tcb = get_cur_tcb();
+		gtMutex[mutex].pHolding_Tcb = current_task;
 
-		// Do something to the tcb's priority too
-		
-		return 0;
+		current_task->holds_lock += 1;
+		// bump up priority to 0 so this task will always run 
+		current_task->cur_prio = 0;
+
 	// Add the current task to the mutex sleep queue
 	} else {
 		uint8_t current_priority = get_cur_prio();
-		tcb_t *current_task = get_cur_tcb();
+		current_task = runqueue_remove(current_priority);
 		tcb_t *sleep_task = gtMutex[mutex].pSleep_queue;
 		if (sleep_task == NULL || sleep_task->cur_prio > current_priority) {
 			gtMutex[mutex].pSleep_queue = current_task;
@@ -94,8 +96,34 @@ int mutex_lock(int mutex)
 	return 0;
 }
 
-int mutex_unlock(int mutex  __attribute__((unused)))
+int mutex_unlock(int mutex)
 {
-	return 1; // fix this to return the correct value
+	if (mutex >= OS_NUM_MUTEX) {
+		//printf("Invalid mutex number\n");
+		return -EINVAL;
+	}
+	if (gtMutex[mutex].bAvailable == FALSE) {
+		//printf("Mutex unavailable\n");
+		return -EINVAL;
+	}
+	tcb_t *current_task = get_cur_tcb();
+	if (gtMutex[mutex].pHolding_Tcb != current_task) {
+		//printf("Mutex already locked by this task\n");
+		return -EPERM;
+	}
+	current_task->cur_prio = current_task->native_prio;
+	current_task->holds_lock -= 1;
+
+	gtMutex[mutex].pHolding_Tcb = gtMutex[mutex].pSleep_queue;
+	if (gtMutex[mutex].pHolding_Tcb == NULL) {
+		gtMutex[mutex].bLock = 0;
+	} else {
+		gtMutex[mutex].pSleep_queue = gtMutex[mutex].pHolding_Tcb->sleep_queue;
+		gtMutex[mutex].pHolding_Tcb->sleep_queue = NULL;
+		gtMutex[mutex].pHolding_Tcb->cur_prio = 0;
+		runqueue_add(gtMutex[mutex].pHolding_Tcb, 0);
+	}
+
+	return 0;
 }
 

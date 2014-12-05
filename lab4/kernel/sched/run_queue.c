@@ -81,10 +81,10 @@ void runqueue_init(void)
  */
 void runqueue_add(tcb_t* tcb, uint8_t prio)
 {
-
 	run_list[prio] = tcb;
 	group_run_bits |= (1 << (prio >> 3));
 	run_bits[prio>>3] |= (1 << (prio & 7));
+	//printf("add: %#x\n", run_bits[0]);
 }
 
 
@@ -103,6 +103,7 @@ tcb_t* runqueue_remove(uint8_t prio)
 	run_list[prio] = NULL;
 	run_bits[prio>>3] &= ~(1 << (prio & 7));
 	if (!run_bits[prio >> 3]) group_run_bits &= ~(1 << (prio >> 3)); 
+	//printf("remove: %#x\n", run_bits[0]);
 	return new; 	
 }
 
