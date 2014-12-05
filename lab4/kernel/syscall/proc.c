@@ -27,9 +27,7 @@ int kernel_task_create(task_t* tasks, size_t num_tasks)
 
 	disable_interrupts();
 
-	unsigned int i = 0, j=0;
-	//unsigned long t[num_tasks];
-	//task_t * sorted_task[num_tasks];
+	unsigned i;
 	task_t current_task;
 
 	if(num_tasks > OS_MAX_TASKS) {
@@ -41,7 +39,7 @@ int kernel_task_create(task_t* tasks, size_t num_tasks)
 		return -EFAULT;
 	}
 
-	for (; i < num_tasks; i++) {
+	for (i = 0; i < num_tasks; i++) {
 		current_task = tasks[i];
 		//check if the user stack contains valid memory addresses
 		if (!valid_addr(current_task.stack_pos, OS_KSTACK_SIZE, USR_START_ADDR, USR_END_ADDR)) {
@@ -51,23 +49,21 @@ int kernel_task_create(task_t* tasks, size_t num_tasks)
 		//check schedubility
 		//*sorted_task[i] = &tasks[i];
 	}
-	task_t swap;
 
-	//create sorted task list
-	for (i = 0 ; i < ( num_tasks - 1 ); i++) {
-    	for (j = 0 ; j < num_tasks - i - 1; j++) {
-      		if (tasks[j].T > tasks[j+1].T) {
-        		swap = tasks[j];
-        		tasks[j] = tasks[j+1];
-        		tasks[j+1] = swap;
-      		}
-    	}
-  	}
+	task_t *ptrs[OS_MAX_TASKS];
+	for (i = 0; i < num_tasks; i++) {
+		ptrs[i] = &tasks[i];
+	}
+
+	if (assign_schedule(ptrs, num_tasks) == 0) {
+		printf("Tasks aren't schedulable");
+		return -ESCHED;
+	}
 
   	// global variable
   	task_created = 1;
 
-  	allocate_tasks(&tasks, num_tasks);
+  	allocate_tasks(ptrs, num_tasks);
   	dispatch_nosave();
 
   	return -1;

@@ -12,9 +12,11 @@
 #include <task.h>
 #include <sched.h>
 #include <device.h>
+#include <syscall.h>
 #include <arm/reg.h>
 #include <arm/psr.h>
 #include <arm/exception.h>
+#include <bits/errno.h>
 
 #define NULL 0
 
@@ -69,11 +71,16 @@ void dev_wait(unsigned int dev)
 		printf("Awwww you done fucked up\n");
 		return;
 	}
-	tcb_t *sleep_task = devices[dev].sleep_queue;
 
 	// find the current running task
 	uint8_t current_priority = get_cur_prio();
 	tcb_t *current_task = get_cur_tcb();
+
+	tcb_t *sleep_task = devices[dev].sleep_queue;
+
+	if (current_task->holds_lock) {
+		invalid_syscall(EHOLDSLOCK);
+	}
 
 	// edge case: if the current task would be highest priority for 
 	// this device, just add it to the front of the queue

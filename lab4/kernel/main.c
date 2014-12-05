@@ -166,7 +166,6 @@ int C_SWI_Handler(int swi_num, int *regs) {
             sleep_syscall ((unsigned) regs[0]);
             break;
         case CREATE_SWI:
-            printf("%p, %lu\n", (void*) regs[0], (size_t) regs[1]);
             count = kernel_task_create((task_t*) regs[0], (size_t) regs[1]);
             break;
         case MUTEX_CREATE:
