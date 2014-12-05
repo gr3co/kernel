@@ -25,8 +25,6 @@
 int kernel_task_create(task_t* tasks, size_t num_tasks)
 {
 
-	disable_interrupts();
-
 	unsigned int i = 0, j=0;
 	//unsigned long t[num_tasks];
 	//task_t * sorted_task[num_tasks];
@@ -67,6 +65,7 @@ int kernel_task_create(task_t* tasks, size_t num_tasks)
   	// global variable
   	task_created = 1;
 
+  	disable_interrupts();
   	allocate_tasks(&tasks, num_tasks);
   	dispatch_nosave();
 
@@ -79,7 +78,9 @@ int kernel_event_wait(unsigned int dev)
 		printf("invalid device number\n");
 		return -EINVAL;
 	}
-	dev_wait(dev);
+	disable_interrupts();
+  	dev_wait(dev);
+  	enable_interrupts();
   	return 0;	
 }
 
