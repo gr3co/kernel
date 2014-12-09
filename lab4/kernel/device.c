@@ -10,6 +10,7 @@
 #include <assert.h>
 
 #include <task.h>
+ #include <lock.h>
 #include <sched.h>
 #include <device.h>
 #include <syscall.h>
@@ -78,7 +79,8 @@ void dev_wait(unsigned int dev)
 
 	tcb_t *sleep_task = devices[dev].sleep_queue;
 
-	if (current_task->holds_lock) {
+	if (current_task->holds_lock && HLP) {
+		printf("lock %d\n",current_task->holds_lock);
 		invalid_syscall(EHOLDSLOCK);
 	}
 
@@ -119,6 +121,7 @@ void dev_update(unsigned long millis)
 			// add all of the devices tasks to the runqueue
 			tcb_t *task = devices[i].sleep_queue;
 			while (task != NULL) {
+				//printf("waking up task %d\n",task->cur_prio);
 				runqueue_add(task, task->cur_prio);
 				tcb_t *next = task->sleep_queue;
 				task->sleep_queue = NULL;

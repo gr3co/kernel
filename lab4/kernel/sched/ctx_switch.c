@@ -58,6 +58,7 @@ void dispatch_save(void)
 	tcb_t* old = cur_tcb;
 	cur_tcb = next_tcb;
 
+	//printf("switching with save from task %d\n",highest);
 	ctx_switch_full(&cur_tcb->context, &old->context);
 }
 
@@ -71,6 +72,7 @@ void dispatch_nosave(void)
 {
 	uint8_t highest = highest_prio();
 	cur_tcb = runqueue_remove(highest);
+	//printf("switching without save from task %d\n",highest);
 	ctx_switch_half(&cur_tcb->context);
 }
 
@@ -92,6 +94,7 @@ void dispatch_sleep(void)
 
 	tcb_t* old = cur_tcb;
 	cur_tcb = next;
+	//printf("putting task %d to sleep\n",highest);
 	ctx_switch_full(&cur_tcb->context, &old->context);
 }
 

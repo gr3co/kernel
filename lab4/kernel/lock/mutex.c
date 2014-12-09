@@ -17,11 +17,13 @@
 #include <bits/errno.h>
 #include <arm/psr.h>
 #include <arm/exception.h>
-#ifdef DEBUG_MUTEX
-#include <exports.h> // temp
+ #include <exports.h>
+/*#ifdef DEBUG_MUTEX
+ // temp
 #endif
-
+*/
 #define NULL 0
+
 
 mutex_t gtMutex[OS_NUM_MUTEX];
 static int next_mutex_available;
@@ -71,12 +73,13 @@ int mutex_lock(int mutex)
 
 		current_task->holds_lock += 1;
 		// bump up priority to 0 so this task will always run 
-		current_task->cur_prio = 0;
+		if (HLP) current_task->cur_prio = 0;
 
 	// Add the current task to the mutex sleep queue
 	} else {
 		uint8_t current_priority = get_cur_prio();
-		current_task = runqueue_remove(current_priority);
+		//printf("adding to sleep queu\n");
+		//current_task = /*runqueue_remove(current_priority)*/get_cur_tcb;
 		tcb_t *sleep_task = gtMutex[mutex].pSleep_queue;
 		if (sleep_task == NULL || sleep_task->cur_prio > current_priority) {
 			gtMutex[mutex].pSleep_queue = current_task;
@@ -92,6 +95,7 @@ int mutex_lock(int mutex)
 			sleep_task->sleep_queue = current_task;
 			current_task->sleep_queue = next;
 		}
+		dispatch_sleep();
 	}
 	return 0;
 }
