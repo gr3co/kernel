@@ -33,7 +33,7 @@ int kernel_task_create(task_t* tasks, size_t num_tasks)
 	}
 
 	if (!valid_addr(tasks,num_tasks*sizeof(task_t), USR_START_ADDR, USR_END_ADDR+1)) {
-		printf("tasks is allocated at a bad address\n");
+		//printf("tasks is allocated at a bad address\n");
 		return -EFAULT;
 	}
 
@@ -41,7 +41,7 @@ int kernel_task_create(task_t* tasks, size_t num_tasks)
 		current_task = tasks[i];
 		//check if the user stack contains valid memory addresses
 		if (!valid_addr(current_task.stack_pos, OS_KSTACK_SIZE, USR_START_ADDR, USR_END_ADDR)) {
-			printf("user inputted an invalid stack address\n");
+			//printf("user inputted an invalid stack address\n");
 			return -EFAULT;
 		}
 		//check schedubility
@@ -54,7 +54,7 @@ int kernel_task_create(task_t* tasks, size_t num_tasks)
 	}
 
 	if (assign_schedule(ptrs, num_tasks) == 0) {
-		printf("Tasks aren't schedulable");
+		//printf("Tasks aren't schedulable");
 		return -ESCHED;
 	}
 

@@ -24,4 +24,6 @@ unsigned long time(void);
 void sleep(unsigned long millis);
 int event_wait(unsigned int dev);
 
+
+int mutex_create();
 #endif /* UNISTD_H */
